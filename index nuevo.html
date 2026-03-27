@@ -22,102 +22,108 @@
     header {
       background: var(--white);
       border-bottom: 1px solid var(--border);
-      padding: 10px 20px;
+      padding: 0 20px;
       position: sticky; top: 0; z-index: 1000;
       display: flex; align-items: center; justify-content: space-between;
-      height: 70px;
+      height: 80px;
     }
     .logo-container { display: flex; flex-direction: column; }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--burgundy); line-height: 1; }
-    .header-tagline { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; letter-spacing: 1px; }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--burgundy); line-height: 1; text-decoration: none; }
+    .header-tagline { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; letter-spacing: 1px; }
 
+    /* BOTÓN COMPRA AQUÍ CON ENLACE */
     .btn-wa-header {
-      background: var(--whatsapp); color: white !important; text-decoration: none;
-      padding: 8px 16px; border-radius: 50px; font-weight: 600; font-size: 0.8rem;
-      display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(37,211,102,0.2);
+      display: flex; align-items: center; gap: 8px;
+      background: var(--whatsapp);
+      color: white !important;
+      text-decoration: none !important;
+      padding: 10px 16px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+      transition: 0.3s;
     }
+    .btn-wa-header:hover { transform: scale(1.05); }
 
-    /* MENÚ DE CATEGORÍAS HORIZONTAL */
-    .cat-menu {
+    /* MENÚ CATEGORÍAS (DEBAJO DEL HEADER) */
+    .cat-nav {
       background: var(--white);
-      padding: 10px 0;
       border-bottom: 1px solid var(--border);
+      padding: 12px 0;
       display: flex;
       overflow-x: auto;
       white-space: nowrap;
-      gap: 10px;
-      padding-left: 20px;
-      scrollbar-width: none; /* Ocultar scroll en Firefox */
+      scrollbar-width: none;
     }
-    .cat-menu::-webkit-scrollbar { display: none; } /* Ocultar scroll en Chrome/Safari */
-    .cat-item {
-      padding: 6px 15px;
+    .cat-nav::-webkit-scrollbar { display: none; }
+    .cat-list { display: flex; gap: 10px; padding: 0 20px; }
+    .cat-btn {
+      padding: 8px 16px;
       background: var(--beige);
       border-radius: 20px;
       font-size: 0.8rem;
       cursor: pointer;
       border: 1px solid transparent;
       transition: 0.3s;
+      color: var(--text);
     }
-    .cat-item.active { background: var(--burgundy); color: white; }
+    .cat-btn.active { background: var(--burgundy); color: white; }
 
-    /* BARRA DE BÚSQUEDA Y FILTRO */
-    .search-bar-container {
+    /* BARRA DE BÚSQUEDA Y FILTRO MÓVIL */
+    .search-section {
       padding: 15px 20px;
       display: flex;
       gap: 10px;
-      align-items: center;
     }
-    .search-input {
-      flex-grow: 1;
-      padding: 10px 15px;
-      border-radius: 10px;
+    .search-box {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       outline: none;
+      background: white;
     }
-    .btn-filter-open {
-      padding: 10px;
-      background: var(--white);
+    .filter-trigger {
+      padding: 10px 15px;
+      background: white;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
+      display: flex; align-items: center;
     }
 
-    /* PANEL LATERAL DE FILTROS */
-    .filter-sidebar {
-      position: fixed; top: 0; right: -300px; width: 280px; height: 100%;
-      background: var(--white); z-index: 2000;
+    /* SIDEBAR FILTROS */
+    .sidebar {
+      position: fixed; top: 0; right: -320px; width: 300px; height: 100%;
+      background: white; z-index: 2000;
       box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-      transition: 0.4s;
-      padding: 30px 20px;
+      transition: 0.4s ease-in-out;
+      padding: 40px 25px;
     }
-    .filter-sidebar.open { right: 0; }
-    .filter-sidebar h3 { margin-bottom: 20px; font-family: 'Cormorant Garamond', serif; color: var(--burgundy); }
-    .filter-group { margin-bottom: 20px; }
-    .filter-group label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; }
-    .filter-select-side { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--beige); }
-    .btn-close-side { background: none; border: none; font-size: 1.5rem; position: absolute; top: 15px; right: 15px; cursor: pointer; }
+    .sidebar.open { right: 0; }
+    .close-sidebar { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; border: none; background: none; cursor: pointer; }
 
-    /* GRID */
-    main { padding: 10px 20px; }
+    /* GRID DE PRODUCTOS */
+    main { padding: 0 20px 40px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-    .card { background: white; border-radius: 12px; overflow: hidden; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.3s; }
-    .card:hover { transform: translateY(-3px); }
+    .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; }
+    .card:hover { transform: translateY(-5px); }
     .card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
-    .card-info { padding: 10px; text-align: center; }
-    .card-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; margin-bottom: 5px; color: var(--text); }
-    .card-price { color: var(--burgundy); font-weight: 600; font-size: 1.1rem; }
+    .card-meta { padding: 12px; text-align: center; }
+    .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; margin-bottom: 5px; }
+    .card-cost { color: var(--burgundy); font-weight: 600; font-size: 1.2rem; }
 
     /* MODAL */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 3000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 3000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
     .modal-overlay.open { display: flex; }
-    .modal { background: white; border-radius: 20px; width: 100%; max-width: 400px; overflow: hidden; position: relative; }
-    .modal-body { padding: 20px; text-align: center; }
-    .btn-wa-modal { background: var(--whatsapp); color: white; text-decoration: none; padding: 15px; border-radius: 30px; display: block; font-weight: 600; margin-bottom: 10px; }
+    .modal-content { background: white; border-radius: 25px; width: 100%; max-width: 450px; overflow: hidden; position: relative; }
+    .modal-details { padding: 25px; text-align: center; }
+    .btn-wa-modal { background: var(--whatsapp); color: white; text-decoration: none; padding: 16px; border-radius: 40px; display: block; font-weight: 600; font-size: 1.1rem; margin-bottom: 15px; }
 
     @media (max-width: 600px) {
       .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .btn-wa-header span { display: none; }
+      .btn-wa-header span { display: none; } /* En móvil solo icono */
     }
   </style>
 </head>
@@ -125,129 +131,121 @@
 
 <header>
   <div class="logo-container">
-    <div class="logo">Accis <span>Venezuela</span></div>
+    <a href="#" class="logo">Accis <span>Venezuela</span></a>
     <div class="header-tagline">Cada día, más tú</div>
   </div>
-  <a href="https://wa.me/584241808527" target="_blank" class="btn-wa-header">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  
+  <a href="https://wa.me/584241808527?text=Hola!%20Vengo%20de%20tu%20catálogo%20y%20quiero%20comprar." target="_blank" class="btn-wa-header">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     <span>Compra aquí</span>
   </a>
 </header>
 
-<div class="cat-menu" id="cat-menu">
-  <div class="cat-item active" onclick="filtrarCat('')">Todos</div>
+<div class="cat-nav">
+  <div class="cat-list" id="cat-list">
+    <button class="cat-btn active" onclick="filtrarCat('')">Todo</button>
+  </div>
 </div>
 
-<div class="search-bar-container">
-  <input type="text" class="search-input" id="search" placeholder="Buscar accesorio...">
-  <button class="btn-filter-open" onclick="toggleSidebar(true)">
+<div class="search-section">
+  <input type="text" class="search-box" id="search" placeholder="Buscar en el catálogo...">
+  <button class="filter-trigger" onclick="toggleSidebar(true)">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
   </button>
 </div>
 
-<div class="filter-sidebar" id="sidebar">
-  <button class="btn-close-side" onclick="toggleSidebar(false)">×</button>
-  <h3>Filtros</h3>
-  <div class="filter-group">
-    <label>ORDENAR POR PRECIO</label>
-    <select class="filter-select-side" id="sort-price" onchange="render()">
-      <option value="">Cualquiera</option>
-      <option value="asc">Menor a Mayor</option>
-      <option value="desc">Mayor a Menor</option>
+<div class="sidebar" id="sidebar">
+  <button class="close-sidebar" onclick="toggleSidebar(false)">×</button>
+  <h2 style="font-family:'Cormorant Garamond', serif; margin-bottom:20px;">Filtros</h2>
+  <div style="margin-bottom: 20px;">
+    <label style="font-size:0.7rem; color:gray; display:block; margin-bottom:10px;">ORDENAR PRECIO</label>
+    <select id="sort" onchange="render()" style="width:100%; padding:10px; border-radius:8px;">
+      <option value="">Destacados</option>
+      <option value="asc">Menor a mayor</option>
+      <option value="desc">Mayor a menor</option>
     </select>
   </div>
-  <button onclick="limpiarFiltros()" style="width:100%; padding:10px; background:var(--beige); border:none; border-radius:8px; cursor:pointer;">Limpiar Todo</button>
+  <button onclick="limpiar()" style="width:100%; padding:12px; background:var(--burgundy); color:white; border:none; border-radius:8px; cursor:pointer;">Limpiar Filtros</button>
 </div>
 
-<main>
-  <div class="grid" id="grid"></div>
-</main>
+<main id="grid" class="grid"></main>
 
 <div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
+  <div class="modal-content">
     <img id="modal-img" src="" style="width:100%; aspect-ratio:1; object-fit:cover;">
-    <div class="modal-body">
+    <div class="modal-details">
       <h2 id="modal-name" style="font-family:'Cormorant Garamond', serif;"></h2>
-      <p id="modal-price" style="font-size:1.5rem; color:var(--burgundy); font-weight:600; margin:10px 0;"></p>
+      <p id="modal-price" style="font-size:1.6rem; color:var(--burgundy); font-weight:600; margin:15px 0;"></p>
       <a id="modal-wa" href="#" target="_blank" class="btn-wa-modal">Pedir por WhatsApp</a>
-      <button onclick="toggleModal(false)" style="background:none; border:none; color:gray; cursor:pointer;">Regresar</button>
+      <button onclick="toggleModal(false)" style="background:none; border:none; color:gray; cursor:pointer; text-decoration:underline;">Volver al catálogo</button>
     </div>
   </div>
 </div>
 
 <script>
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
-  const COL = { nombre:1, categoria:2, precio:3, foto:9 };
+  const COL = { nombre:1, cat:2, precio:3, foto:9 };
   let productos = [];
-  let catSeleccionada = '';
+  let catActual = '';
 
-  async function cargar() {
-    const res = await fetch(SHEET_CSV + '&t=' + Date.now());
-    const text = await res.text();
-    const lines = text.trim().split('\n').slice(1);
-    productos = lines.map(line => line.split(',').map(c => c.replace(/"/g, '').trim()));
-    
-    // Crear menú de categorías
-    const cats = [...new Set(productos.map(p => p[COL.categoria]))].filter(Boolean).sort();
-    const menu = document.getElementById('cat-menu');
+  async function inicio() {
+    const r = await fetch(SHEET_CSV + '&t=' + Date.now());
+    const t = await r.text();
+    const filas = t.trim().split('\n').slice(1);
+    productos = filas.map(f => f.split(',').map(c => c.replace(/"/g, '').trim()));
+
+    // Llenar categorías
+    const cats = [...new Set(productos.map(p => p[COL.cat]))].filter(Boolean).sort();
+    const contenedor = document.getElementById('cat-list');
     cats.forEach(c => {
-      const div = document.createElement('div');
-      div.className = 'cat-item';
-      div.textContent = c;
-      div.onclick = () => filtrarCat(c, div);
-      menu.appendChild(div);
+      const btn = document.createElement('button');
+      btn.className = 'cat-btn';
+      btn.textContent = c;
+      btn.onclick = () => {
+        catActual = c;
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+      };
+      contenedor.appendChild(btn);
     });
     render();
   }
 
-  function filtrarCat(c, element) {
-    catSeleccionada = c;
-    document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
-    if(element) element.classList.add('active');
-    else document.querySelector('.cat-item').classList.add('active');
-    render();
-  }
-
-  function toggleSidebar(show) { document.getElementById('sidebar').classList.toggle('open', show); }
-  function toggleModal(show) { document.getElementById('modal-overlay').classList.toggle('open', show); }
-
   function render() {
     const bus = document.getElementById('search').value.toLowerCase();
-    const sort = document.getElementById('sort-price').value;
+    const sort = document.getElementById('sort').value;
 
-    let filtrados = productos.filter(p => (!catSeleccionada || p[COL.categoria] === catSeleccionada) && (!bus || p[COL.nombre].toLowerCase().includes(bus)));
+    let f = productos.filter(p => (!catActual || p[COL.cat] === catActual) && (!bus || p[COL.nombre].toLowerCase().includes(bus)));
 
-    if(sort === 'asc') filtrados.sort((a,b) => parseFloat(a[COL.precio]) - parseFloat(b[COL.precio]));
-    if(sort === 'desc') filtrados.sort((a,b) => parseFloat(b[COL.precio]) - parseFloat(a[COL.precio]));
+    if(sort === 'asc') f.sort((a,b) => parseFloat(a[COL.precio]) - parseFloat(b[COL.precio]));
+    if(sort === 'desc') f.sort((a,b) => parseFloat(b[COL.precio]) - parseFloat(a[COL.precio]));
 
-    document.getElementById('grid').innerHTML = filtrados.map(p => `
+    document.getElementById('grid').innerHTML = f.map(p => `
       <div class="card" onclick="ver('${p[COL.nombre]}', '${p[COL.precio]}', '${p[COL.foto]}')">
         <img src="${p[COL.foto]}">
-        <div class="card-info">
-          <div class="card-name">${p[COL.nombre]}</div>
-          <div class="card-price">$${p[COL.precio]}</div>
+        <div class="card-meta">
+          <div class="card-title">${p[COL.nombre]}</div>
+          <div class="card-cost">$${p[COL.precio]}</div>
         </div>
       </div>
     `).join('');
   }
 
-  function ver(name, price, img) {
-    document.getElementById('modal-img').src = img;
-    document.getElementById('modal-name').textContent = name;
-    document.getElementById('modal-price').textContent = '$' + price;
-    document.getElementById('modal-wa').href = `https://wa.me/584241808527?text=Hola! Quiero este accesorio: ${name}`;
+  function ver(n, p, i) {
+    document.getElementById('modal-img').src = i;
+    document.getElementById('modal-name').textContent = n;
+    document.getElementById('modal-price').textContent = '$' + p;
+    document.getElementById('modal-wa').href = `https://wa.me/584241808527?text=Hola! Me interesa este accesorio: ${n}`;
     toggleModal(true);
   }
 
-  function limpiarFiltros() {
-    document.getElementById('sort-price').value = '';
-    document.getElementById('search').value = '';
-    filtrarCat('');
-    toggleSidebar(false);
-  }
+  function toggleSidebar(s) { document.getElementById('sidebar').classList.toggle('open', s); }
+  function toggleModal(s) { document.getElementById('modal-overlay').classList.toggle('open', s); }
+  function limpiar() { document.getElementById('sort').value = ''; document.getElementById('search').value = ''; catActual = ''; render(); toggleSidebar(false); }
 
   document.getElementById('search').oninput = render;
-  cargar();
+  inicio();
 </script>
 </body>
 </html>
