@@ -17,116 +17,110 @@
       --border: #e0d0d6;
       --card-shadow: 0 2px 16px rgba(129,66,86,0.08);
       --card-shadow-hover: 0 8px 32px rgba(129,66,86,0.18);
-      --whatsapp: #25D366;
+      --whatsapp: #25D366; /* Verde WhatsApp */
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: var(--beige); color: var(--text); min-height: 100vh; }
 
+    /* HEADER AJUSTADO */
     header {
       background: var(--white);
       border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
+      padding: 0 1.5rem;
       position: sticky; top: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      height: 70px;
+      height: 70px; /* Altura fija */
     }
-    .logo-wrap { display: flex; flex-direction: column; }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; color: var(--burgundy); letter-spacing: 0.04em; line-height: 1; }
+    
+    /* Agrupador Logo + Eslogan (Izquierda) */
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--burgundy); letter-spacing: 0.04em; line-height: 1; }
     .logo span { font-style: italic; font-weight: 300; }
-    .header-tagline { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+    .header-tagline { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; font-weight: 400; }
 
-    /* Botón WhatsApp Header */
+    /* BOTÓN WHATSAPP "COMPRA AQUÍ" (DERECHA) */
     .btn-wa-header {
       display: flex; align-items: center; gap: 8px;
       background: var(--whatsapp); color: white;
-      text-decoration: none; padding: 8px 16px;
-      border-radius: 25px; font-size: 0.85rem; font-weight: 500;
-      transition: transform 0.2s;
+      text-decoration: none; padding: 10px 18px;
+      border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      white-space: nowrap; /* Que no se rompa el texto */
     }
-    .btn-wa-header:hover { transform: scale(1.05); background: #1da851; }
+    .btn-wa-header:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4); }
+    .btn-wa-header svg { width: 18px; height: 18px; }
 
+    /* Hero */
     .hero { background: var(--burgundy); color: var(--white); text-align: center; padding: 3rem 2rem 2.5rem; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(255,255,255,0.06) 0%, transparent 60%); }
     .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
-    .hero h1 em { font-style: italic; font-weight: 400; }
     .hero p { font-size: 0.85rem; opacity: 0.75; letter-spacing: 0.06em; text-transform: uppercase; }
 
-    .filters-wrap { background: var(--white); border-bottom: 1px solid var(--border); padding: 1rem 2rem; position: sticky; top: 70px; z-index: 90; }
-    .filters-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
-    .filter-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 500; white-space: nowrap; }
-    .filter-group { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
-    .filter-select {
-      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; padding: 0.35rem 1.6rem 0.35rem 0.8rem;
-      border: 1px solid var(--border); border-radius: 20px; background: var(--beige); color: var(--text);
-      cursor: pointer; outline: none; transition: border-color 0.2s, background 0.2s; appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23814256'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 0.6rem center; background-size: 8px;
-    }
-    .search-input {
-      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; padding: 0.35rem 0.8rem 0.35rem 2rem;
-      border: 1px solid var(--border); border-radius: 20px; background: var(--beige); color: var(--text);
-      outline: none; width: 180px; transition: all 0.3s;
-    }
-    .search-input:focus { border-color: var(--burgundy); width: 220px; }
-    .btn-clear { font-family: 'DM Sans', sans-serif; font-size: 0.75rem; padding: 0.35rem 0.9rem; border: 1px solid var(--burgundy); border-radius: 20px; background: transparent; color: var(--burgundy); cursor: pointer; transition: 0.2s; }
-    .btn-clear:hover { background: var(--burgundy); color: var(--white); }
-
-    main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    .results-info { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.25rem; }
-
-    .card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--card-shadow); transition: all 0.25s ease; cursor: pointer; animation: fadeUp 0.4s ease both; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    .card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
-    .card-img-wrap { position: relative; width: 100%; padding-top: 100%; background: var(--beige); overflow: hidden; }
-    .card-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    /* Filtros Sticky */
+    .filters-wrap { background: var(--white); border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; position: sticky; top: 70px; z-index: 90; }
+    .filters-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: center; }
     
-    .card-body { padding: 0.85rem 1rem 1rem; }
-    .card-cat { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--burgundy); font-weight: 500; margin-bottom: 0.25rem; }
-    .card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--text); margin-bottom: 0.5rem; }
-    .card-price { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--burgundy); }
-    .btn-pedir { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 500; padding: 0.35rem 0.8rem; border-radius: 20px; border: none; background: var(--burgundy); color: var(--white); text-decoration: none; transition: 0.2s; }
-    .btn-pedir:hover { background: var(--burgundy-dark); }
+    .filter-select, .search-input {
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; padding: 0.5rem 1rem;
+      border: 1px solid var(--border); border-radius: 20px; background: var(--beige); color: var(--text); outline: none;
+    }
+
+    /* Grid de Productos */
+    main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+
+    .card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--card-shadow); transition: all 0.25s ease; cursor: pointer; text-decoration: none; }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
+    .card-img-wrap { position: relative; width: 100%; padding-top: 100%; background: #f9f9f9; }
+    .card-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .card-body { padding: 1rem; text-align: center; }
+    .card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); }
+    .card-price { color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; }
 
     /* Modal */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(46,26,33,0.55); z-index: 200; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(3px); }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(4px); }
     .modal-overlay.open { display: flex; }
-    .modal { background: var(--white); border-radius: 16px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: modalIn 0.25s ease; }
-    @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-    .modal-img-wrap { position: relative; width: 100%; padding-top: 75%; background: var(--beige); overflow: hidden; }
-    .modal-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .modal-body { padding: 1.5rem; }
-    .modal-name { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
-    .modal-price { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: var(--burgundy); margin-bottom: 1rem; }
-    .modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 1.5rem; }
+    .modal { background: var(--white); border-radius: 20px; max-width: 450px; width: 100%; overflow: hidden; position: relative; animation: fadeIn 0.3s ease; max-height: 90vh; overflow-y: auto; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     
-    /* Botón WhatsApp Modal resaltado */
+    .modal-img-wrap { position: relative; width: 100%; padding-top: 75%; background: #f9f9f9; }
+    .modal-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .modal-body { padding: 1.5rem; text-align: center; }
+    .modal-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .modal-price { color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 1.2rem; }
+
     .btn-wa-modal { 
       display: flex; align-items: center; justify-content: center; gap: 10px;
       background: var(--whatsapp); color: white; text-decoration: none;
-      padding: 12px; border-radius: 30px; font-weight: 600; font-size: 1rem;
-      transition: background 0.2s;
+      padding: 14px; border-radius: 35px; font-weight: 600; font-size: 1rem; margin-bottom: 10px;
     }
-    .btn-wa-modal:hover { background: #1da851; }
-    .btn-close-modal { padding: 10px; border: 1px solid var(--border); background: none; border-radius: 30px; cursor: pointer; color: var(--text-muted); }
 
     @media (max-width: 600px) {
-      header { padding: 0 1rem; }
-      .btn-wa-header span { display: none; } /* Ocultar texto en móviles, solo queda el icono */
-      .grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      header { padding: 0 1rem; height: 60px; }
+      .logo { font-size: 1.2rem; }
+      .header-tagline { font-size: 0.55rem; }
+      
+      .btn-wa-header span { display: none; } /* En móvil ocultar texto, dejar solo icono */
+      .btn-wa-header { padding: 10px; }
+      .btn-wa-header svg { margin: 0; width: 20px; height: 20px; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-wrap">
+  <div class="logo-container">
     <div class="logo">Accis <span>Venezuela</span></div>
     <div class="header-tagline">Cada día, más tú</div>
   </div>
-  <a href="https://wa.me/584241808527?text=Hola!%20Vengo%20de%20tu%20catálogo%20y%20tengo%20una%20pregunta." target="_blank" class="btn-wa-header">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    <span>WhatsApp</span>
+  
+  <a href="https://wa.me/584241808527?text=Hola!%20Vengo%20de%20tu%20catálogo%20y%20tengo%20una%20consulta." target="_blank" class="btn-wa-header">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span>Compra aquí</span>
   </a>
 </header>
 
@@ -137,47 +131,41 @@
 
 <div class="filters-wrap">
   <div class="filters-inner">
-    <div class="filter-group">
-      <select class="filter-select" id="f-categoria"><option value="">Categoría</option></select>
-      <input class="search-input" id="search" type="text" placeholder="Buscar producto…"/>
-    </div>
-    <button class="btn-clear" id="btn-clear">Limpiar</button>
+    <select class="filter-select" id="f-categoria"><option value="">Categorías</option></select>
+    <input class="search-input" id="search" type="text" placeholder="Buscar producto…"/>
+    <button id="btn-clear" style="border:1px solid #814256; color:#814256; background:none; padding:5px 10px; border-radius:20px; font-size:0.75rem; cursor:pointer;">Limpiar</button>
   </div>
 </div>
 
 <main>
-  <div class="results-info" id="results-info"></div>
+  <div class="results-info" id="results-info" style="font-size: 0.8rem; color: #9c7a84; margin-bottom: 1rem;"></div>
   <div class="grid" id="grid">
-    <div class="loading">Cargando productos…</div>
+    <div style="text-align:center; color:#814256;">Cargando catálogo…</div>
   </div>
 </main>
 
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
-    <div class="modal-img-wrap">
-      <img id="modal-main-img" src="" alt=""/>
-    </div>
+    <div class="modal-img-wrap"><img id="modal-main-img" src="" alt=""/></div>
     <div class="modal-body">
-      <div id="modal-cat" class="card-cat"></div>
+      <div id="modal-cat" style="color:#814256; text-transform:uppercase; font-size:0.7rem; letter-spacing:0.1em; font-weight:600; margin-bottom:5px;"></div>
       <div id="modal-name" class="modal-name"></div>
       <div id="modal-price" class="modal-price"></div>
-      <div id="modal-details" style="font-size: 0.9rem; color: #666; margin-bottom: 15px;"></div>
       
-      <div class="modal-actions">
-        <a id="modal-wa" href="#" target="_blank" class="btn-wa-modal">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Pedir por WhatsApp
-        </a>
-        <button class="btn-close-modal" id="modal-close">Cerrar ventana</button>
-      </div>
+      <a id="modal-wa" href="#" target="_blank" class="btn-wa-modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Comprar
+      </a>
+      <button id="modal-close" style="color:#9c7a84; background:none; border:none; cursor:pointer; font-size:0.8rem;">Cerrar ventana</button>
     </div>
   </div>
 </div>
 
 <script>
+  // ... (Script original del catálogo, sin cambios)
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
   const WA_NUMBER = '584241808527';
-  const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, foto1:9 };
+  const COL = { id:0, nombre:1, categoria:2, precio:3, foto1:9 };
 
   let productos = [];
   let filtros = { categoria:'', busqueda:'' };
@@ -190,7 +178,7 @@
       poblarFiltros();
       renderGrid();
     } catch(e) {
-      document.getElementById('grid').innerHTML = "Error al cargar.";
+      document.getElementById('grid').innerHTML = '<div style="text-align:center; color:#814256;">No pudimos cargar el catálogo. Por favor intenta más tarde.</div>';
     }
   }
 
@@ -211,12 +199,11 @@
       return matchesCat && matchesSearch;
     });
 
-    document.getElementById('results-info').textContent = `${filtered.length} productos`;
+    document.getElementById('results-info').textContent = `${filtered.length} productos disponibles`;
     document.getElementById('grid').innerHTML = filtered.map((p, i) => `
       <div class="card" onclick="abrirModal(${productos.indexOf(p)})">
         <div class="card-img-wrap"><img src="${p[COL.foto1]}" onerror="this.src='https://via.placeholder.com/300?text=Accis'"></div>
         <div class="card-body">
-          <div class="card-cat">${p[COL.categoria]}</div>
           <div class="card-name">${p[COL.nombre]}</div>
           <div class="card-price">$${p[COL.precio]}</div>
         </div>
@@ -230,9 +217,8 @@
     document.getElementById('modal-cat').textContent = p[COL.categoria];
     document.getElementById('modal-name').textContent = p[COL.nombre];
     document.getElementById('modal-price').textContent = '$' + p[COL.precio];
-    document.getElementById('modal-details').textContent = `Material: ${p[COL.material]} | Color: ${p[COL.color1]}`;
     
-    const msg = encodeURIComponent(`¡Hola! Me interesa este accesorio: *${p[COL.nombre]}*`);
+    const msg = encodeURIComponent(`¡Hola Accis! Me interesa este accesorio: *${p[COL.nombre]}* (Catálogo)`);
     document.getElementById('modal-wa').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
     
     document.getElementById('modal-overlay').classList.add('open');
