@@ -207,8 +207,7 @@
 
 <script>
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
-  const WA_NUMBER = '584241808527'; // ← Cambia por tu número real (código de país sin +)
-
+  const WA_NUMBER = '584241808527'; //
   const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12 };
 
   let productos = [];
@@ -257,12 +256,13 @@
   function filtrar() {
     return productos.filter(p => {
       const disponible = parseInt(p[COL.stock]) > 0;
+      // Ocultar agotados por defecto, a menos que el filtro de stock sea explícito
+      if (!disponible && filtros.stock !== 'agotado') return false;
+      if (filtros.stock === 'agotado' && disponible) return false;
       if (filtros.categoria && p[COL.categoria] !== filtros.categoria) return false;
       if (filtros.material && p[COL.material] !== filtros.material) return false;
       if (filtros.color && p[COL.color1] !== filtros.color && p[COL.color2] !== filtros.color) return false;
       if (filtros.tamano && p[COL.tamano] !== filtros.tamano) return false;
-      if (filtros.stock === 'disponible' && !disponible) return false;
-      if (filtros.stock === 'agotado' && disponible) return false;
       if (filtros.busqueda) {
         const q = filtros.busqueda.toLowerCase();
         if (![p[COL.nombre], p[COL.categoria], p[COL.material], p[COL.color1]].join(' ').toLowerCase().includes(q)) return false;
@@ -286,31 +286,25 @@
       const imgHTML = fotos.length
         ? `<img src="${fotos[0]}" alt="${p[COL.nombre]}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=no-img>💎<span>Sin foto</span></div>'">`
         : `<div class="no-img">💎<span>Sin foto</span></div>`;
+      const msg = encodeURIComponent(`Hola! Me interesa el producto: *${p[COL.nombre]}* \u{1F48E}\n\u00bfEst\u00e1 disponible?`);
+      const waLink = `https://wa.me/${WA_NUMBER}?text=${msg}`;
       return `
-        <div class="card${!disponible?' agotado':''}" style="animation-delay:${i*0.04}s" data-idx="${productos.indexOf(p)}">
-          <div class="card-img-wrap">
-            ${!disponible ? '<div class="badge-agotado">Agotado</div>' : ''}
-            ${imgHTML}
-          </div>
+        <div class="card" style="animation-delay:${i*0.04}s" data-idx="${productos.indexOf(p)}">
+          <div class="card-img-wrap">${imgHTML}</div>
           <div class="card-body">
             <div class="card-cat">${p[COL.categoria]}</div>
             <div class="card-name">${p[COL.nombre]}</div>
             <div class="card-meta">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
             <div class="card-footer">
               <div class="card-price">${!isNaN(precio) ? '$'+precio.toFixed(2) : p[COL.precio]}</div>
-              ${disponible
-                ? `<button class="btn-pedir" data-idx="${productos.indexOf(p)}">Pedir</button>`
-                : `<span class="btn-pedir disabled">Agotado</span>`}
+              <a class="btn-pedir" href="${waLink}" target="_blank" onclick="event.stopPropagation()">Pedir</a>
             </div>
           </div>
         </div>`;
     }).join('');
 
     document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', e => { if (!e.target.classList.contains('btn-pedir')) abrirModal(parseInt(card.dataset.idx)); });
-    });
-    document.querySelectorAll('.btn-pedir:not(.disabled)').forEach(btn => {
-      btn.addEventListener('click', e => { e.stopPropagation(); abrirModal(parseInt(btn.dataset.idx)); });
+      card.addEventListener('click', e => { if (!e.target.classList.contains('btn-pedir') && !e.target.closest('.btn-pedir')) abrirModal(parseInt(card.dataset.idx)); });
     });
   }
 
