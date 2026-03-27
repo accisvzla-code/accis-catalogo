@@ -10,103 +10,72 @@
       --burgundy: #814256;
       --beige: #f2e9e1;
       --white: #ffffff;
-      --burgundy-light: #a05a6e;
-      --burgundy-dark: #5e2f3e;
       --text: #2e1a21;
       --text-muted: #9c7a84;
       --border: #e0d0d6;
-      --card-shadow: 0 2px 16px rgba(129,66,86,0.08);
-      --card-shadow-hover: 0 8px 32px rgba(129,66,86,0.18);
-      --whatsapp: #25D366; /* Verde WhatsApp */
+      --whatsapp: #25D366;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--beige); color: var(--text); min-height: 100vh; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--beige); color: var(--text); }
 
-    /* HEADER AJUSTADO */
+    /* HEADER - AJUSTE FINAL */
     header {
       background: var(--white);
       border-bottom: 1px solid var(--border);
-      padding: 0 1.5rem;
-      position: sticky; top: 0; z-index: 100;
+      padding: 10px 20px;
+      position: sticky; top: 0; z-index: 1000;
       display: flex; align-items: center; justify-content: space-between;
-      height: 70px; /* Altura fija */
+      min-height: 80px;
     }
-    
-    /* Agrupador Logo + Eslogan (Izquierda) */
-    .logo-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--burgundy); letter-spacing: 0.04em; line-height: 1; }
-    .logo span { font-style: italic; font-weight: 300; }
-    .header-tagline { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; font-weight: 400; }
+    .logo-container { display: flex; flex-direction: column; }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--burgundy); line-height: 1; }
+    .header-tagline { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; letter-spacing: 1px; }
 
-    /* BOTÓN WHATSAPP "COMPRA AQUÍ" (DERECHA) */
+    /* BOTÓN COMPRA AQUÍ */
     .btn-wa-header {
-      display: flex; align-items: center; gap: 8px;
-      background: var(--whatsapp); color: white;
-      text-decoration: none; padding: 10px 18px;
-      border-radius: 50px; font-size: 0.85rem; font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-      white-space: nowrap; /* Que no se rompa el texto */
+      background: var(--whatsapp);
+      color: white !important;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+      transition: 0.3s;
     }
-    .btn-wa-header:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4); }
-    .btn-wa-header svg { width: 18px; height: 18px; }
+    .btn-wa-header:hover { transform: scale(1.05); }
 
-    /* Hero */
-    .hero { background: var(--burgundy); color: var(--white); text-align: center; padding: 3rem 2rem 2.5rem; position: relative; overflow: hidden; }
-    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
-    .hero p { font-size: 0.85rem; opacity: 0.75; letter-spacing: 0.06em; text-transform: uppercase; }
+    /* HERO */
+    .hero { background: var(--burgundy); color: white; text-align: center; padding: 40px 20px; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; }
 
-    /* Filtros Sticky */
-    .filters-wrap { background: var(--white); border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; position: sticky; top: 70px; z-index: 90; }
-    .filters-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: center; }
-    
-    .filter-select, .search-input {
-      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; padding: 0.5rem 1rem;
-      border: 1px solid var(--border); border-radius: 20px; background: var(--beige); color: var(--text); outline: none;
-    }
+    /* FILTROS */
+    .filters-wrap { background: white; padding: 15px; position: sticky; top: 80px; z-index: 900; border-bottom: 1px solid var(--border); }
+    .filters-inner { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .filter-select, .search-input { padding: 8px 15px; border-radius: 20px; border: 1px solid var(--border); outline: none; background: var(--beige); }
 
-    /* Grid de Productos */
-    main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+    /* GRID */
+    main { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+    .card { background: white; border-radius: 10px; overflow: hidden; cursor: pointer; text-align: center; padding-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+    .card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; padding: 10px 5px 0; }
+    .card-price { color: var(--burgundy); font-weight: 600; }
 
-    .card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--card-shadow); transition: all 0.25s ease; cursor: pointer; text-decoration: none; }
-    .card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
-    .card-img-wrap { position: relative; width: 100%; padding-top: 100%; background: #f9f9f9; }
-    .card-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .card-body { padding: 1rem; text-align: center; }
-    .card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); }
-    .card-price { color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; }
-
-    /* Modal */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(4px); }
+    /* MODAL */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
-    .modal { background: var(--white); border-radius: 20px; max-width: 450px; width: 100%; overflow: hidden; position: relative; animation: fadeIn 0.3s ease; max-height: 90vh; overflow-y: auto; }
-    @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-    
-    .modal-img-wrap { position: relative; width: 100%; padding-top: 75%; background: #f9f9f9; }
-    .modal-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .modal-body { padding: 1.5rem; text-align: center; }
-    .modal-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
-    .modal-price { color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 1.2rem; }
-
-    .btn-wa-modal { 
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      background: var(--whatsapp); color: white; text-decoration: none;
-      padding: 14px; border-radius: 35px; font-weight: 600; font-size: 1rem; margin-bottom: 10px;
-    }
+    .modal { background: white; border-radius: 15px; width: 100%; max-width: 400px; overflow: hidden; text-align: center; }
+    .modal-img { width: 100%; max-height: 300px; object-fit: cover; }
+    .modal-body { padding: 20px; }
+    .btn-wa-modal { background: var(--whatsapp); color: white; text-decoration: none; padding: 15px; border-radius: 30px; display: block; margin-bottom: 10px; font-weight: 600; }
 
     @media (max-width: 600px) {
-      header { padding: 0 1rem; height: 60px; }
-      .logo { font-size: 1.2rem; }
-      .header-tagline { font-size: 0.55rem; }
-      
-      .btn-wa-header span { display: none; } /* En móvil ocultar texto, dejar solo icono */
-      .btn-wa-header { padding: 10px; }
-      .btn-wa-header svg { margin: 0; width: 20px; height: 20px; }
+      .btn-wa-header span { display: none; } /* En móvil solo sale el icono de WA */
+      header { height: 70px; }
     }
   </style>
 </head>
@@ -118,118 +87,85 @@
     <div class="header-tagline">Cada día, más tú</div>
   </div>
   
-  <a href="https://wa.me/584241808527?text=Hola!%20Vengo%20de%20tu%20catálogo%20y%20tengo%20una%20consulta." target="_blank" class="btn-wa-header">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <a href="https://wa.me/584241808527?text=Hola!%20Vengo%20de%20tu%20catálogo%20y%20quiero%20comprar." target="_blank" class="btn-wa-header">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     <span>Compra aquí</span>
   </a>
 </header>
 
 <div class="hero">
-  <h1>Nuestro <em>catálogo</em></h1>
-  <p>Bisutería y accesorios · Venezuela</p>
+  <h1>Catálogo Accis</h1>
 </div>
 
 <div class="filters-wrap">
   <div class="filters-inner">
     <select class="filter-select" id="f-categoria"><option value="">Categorías</option></select>
-    <input class="search-input" id="search" type="text" placeholder="Buscar producto…"/>
-    <button id="btn-clear" style="border:1px solid #814256; color:#814256; background:none; padding:5px 10px; border-radius:20px; font-size:0.75rem; cursor:pointer;">Limpiar</button>
+    <input class="search-input" id="search" type="text" placeholder="Buscar..."/>
   </div>
 </div>
 
 <main>
-  <div class="results-info" id="results-info" style="font-size: 0.8rem; color: #9c7a84; margin-bottom: 1rem;"></div>
-  <div class="grid" id="grid">
-    <div style="text-align:center; color:#814256;">Cargando catálogo…</div>
-  </div>
+  <div class="grid" id="grid">Cargando catálogo...</div>
 </main>
 
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
-    <div class="modal-img-wrap"><img id="modal-main-img" src="" alt=""/></div>
+    <img id="modal-img" class="modal-img" src="" alt=""/>
     <div class="modal-body">
-      <div id="modal-cat" style="color:#814256; text-transform:uppercase; font-size:0.7rem; letter-spacing:0.1em; font-weight:600; margin-bottom:5px;"></div>
-      <div id="modal-name" class="modal-name"></div>
-      <div id="modal-price" class="modal-price"></div>
-      
-      <a id="modal-wa" href="#" target="_blank" class="btn-wa-modal">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Comprar
-      </a>
-      <button id="modal-close" style="color:#9c7a84; background:none; border:none; cursor:pointer; font-size:0.8rem;">Cerrar ventana</button>
+      <h2 id="modal-name"></h2>
+      <p id="modal-price" class="modal-price"></p>
+      <a id="modal-wa" href="#" target="_blank" class="btn-wa-modal">Pedir por WhatsApp</a>
+      <button onclick="document.getElementById('modal-overlay').classList.remove('open')" style="background:none; border:none; color:gray; cursor:pointer;">Cerrar</button>
     </div>
   </div>
 </div>
 
 <script>
-  // ... (Script original del catálogo, sin cambios)
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
-  const WA_NUMBER = '584241808527';
-  const COL = { id:0, nombre:1, categoria:2, precio:3, foto1:9 };
-
+  const COL = { nombre:1, categoria:2, precio:3, foto:9 };
   let productos = [];
-  let filtros = { categoria:'', busqueda:'' };
 
-  async function cargarProductos() {
+  async function cargar() {
     try {
       const res = await fetch(SHEET_CSV + '&t=' + Date.now());
       const text = await res.text();
-      productos = parseCSV(text);
-      poblarFiltros();
-      renderGrid();
-    } catch(e) {
-      document.getElementById('grid').innerHTML = '<div style="text-align:center; color:#814256;">No pudimos cargar el catálogo. Por favor intenta más tarde.</div>';
-    }
+      const lines = text.trim().split('\n').slice(1);
+      productos = lines.map(line => line.split(',').map(c => c.replace(/"/g, '').trim()));
+      
+      const cats = [...new Set(productos.map(p => p[COL.categoria]))].filter(Boolean).sort();
+      document.getElementById('f-categoria').innerHTML += cats.map(c => `<option value="${c}">${c}</option>`).join('');
+      
+      render();
+    } catch(e) { document.getElementById('grid').innerHTML = "Error al cargar datos."; }
   }
 
-  function parseCSV(text) {
-    const lines = text.trim().split('\n').slice(1);
-    return lines.map(line => line.split(',').map(c => c.replace(/"/g, '').trim()));
-  }
-
-  function poblarFiltros() {
-    const cats = [...new Set(productos.map(p => p[COL.categoria]))].filter(Boolean).sort();
-    document.getElementById('f-categoria').innerHTML = '<option value="">Categorías</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
-  }
-
-  function renderGrid() {
-    const filtered = productos.filter(p => {
-      const matchesCat = !filtros.categoria || p[COL.categoria] === filtros.categoria;
-      const matchesSearch = !filtros.busqueda || p[COL.nombre].toLowerCase().includes(filtros.busqueda.toLowerCase());
-      return matchesCat && matchesSearch;
-    });
-
-    document.getElementById('results-info').textContent = `${filtered.length} productos disponibles`;
-    document.getElementById('grid').innerHTML = filtered.map((p, i) => `
-      <div class="card" onclick="abrirModal(${productos.indexOf(p)})">
-        <div class="card-img-wrap"><img src="${p[COL.foto1]}" onerror="this.src='https://via.placeholder.com/300?text=Accis'"></div>
-        <div class="card-body">
-          <div class="card-name">${p[COL.nombre]}</div>
-          <div class="card-price">$${p[COL.precio]}</div>
-        </div>
+  function render() {
+    const cat = document.getElementById('f-categoria').value;
+    const bus = document.getElementById('search').value.toLowerCase();
+    
+    const filtrados = productos.filter(p => (!cat || p[COL.categoria] === cat) && (!bus || p[COL.nombre].toLowerCase().includes(bus)));
+    
+    document.getElementById('grid').innerHTML = filtrados.map((p, idx) => `
+      <div class="card" onclick="ver(${productos.indexOf(p)})">
+        <img src="${p[COL.foto]}">
+        <div class="card-name">${p[COL.nombre]}</div>
+        <div class="card-price">$${p[COL.precio]}</div>
       </div>
     `).join('');
   }
 
-  function abrirModal(idx) {
-    const p = productos[idx];
-    document.getElementById('modal-main-img').src = p[COL.foto1];
-    document.getElementById('modal-cat').textContent = p[COL.categoria];
+  function ver(i) {
+    const p = productos[i];
+    document.getElementById('modal-img').src = p[COL.foto];
     document.getElementById('modal-name').textContent = p[COL.nombre];
     document.getElementById('modal-price').textContent = '$' + p[COL.precio];
-    
-    const msg = encodeURIComponent(`¡Hola Accis! Me interesa este accesorio: *${p[COL.nombre]}* (Catálogo)`);
-    document.getElementById('modal-wa').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
-    
+    document.getElementById('modal-wa').href = `https://wa.me/584241808527?text=Me%20interesa:%20${p[COL.nombre]}`;
     document.getElementById('modal-overlay').classList.add('open');
   }
 
-  document.getElementById('modal-close').onclick = () => document.getElementById('modal-overlay').classList.remove('open');
-  document.getElementById('f-categoria').onchange = (e) => { filtros.categoria = e.target.value; renderGrid(); };
-  document.getElementById('search').oninput = (e) => { filtros.busqueda = e.target.value; renderGrid(); };
-  document.getElementById('btn-clear').onclick = () => { filtros = {categoria:'', busqueda:''}; document.getElementById('search').value=''; document.getElementById('f-categoria').value=''; renderGrid(); };
-
-  cargarProductos();
+  document.getElementById('f-categoria').onchange = render;
+  document.getElementById('search').oninput = render;
+  cargar();
 </script>
 </body>
 </html>
