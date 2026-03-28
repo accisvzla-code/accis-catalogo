@@ -50,6 +50,8 @@
     .cat-pill { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
     .cat-pill:hover { border-color: var(--burgundy); color: var(--burgundy); }
     .cat-pill.active { background: var(--burgundy); color: var(--white); border-color: var(--burgundy); }
+    .cat-pill.liquidacion { border-color:#c0392b; color:#c0392b; font-weight:500; }
+    .cat-pill.liquidacion.active { background:#c0392b; color:var(--white); border-color:#c0392b; }
 
     /* FILTERS PANEL */
     .filters-bar { background: var(--white); border-bottom: 1px solid var(--border); }
@@ -101,6 +103,12 @@
     .btn-carrito { font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 500; padding: 0.32rem 0.75rem; border-radius: 20px; border: 1.5px solid var(--burgundy); background: transparent; color: var(--burgundy); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
     .btn-carrito:hover, .btn-carrito.added { background: var(--burgundy); color: var(--white); }
 
+    .precio-wrap { display:flex; flex-direction:column; gap:0.1rem; }
+    .precio-original { font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--text-muted); text-decoration:line-through; line-height:1; }
+    .precio-desc { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:var(--burgundy); line-height:1; }
+    .badge-desc { font-size:0.6rem; font-weight:600; color:#c0392b; background:#fdecea; border-radius:20px; padding:0.15rem 0.4rem; letter-spacing:0.04em; display:inline-block; margin-top:0.15rem; }
+    .modal-precio-original { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--text-muted); text-decoration:line-through; margin-bottom:0.1rem; }
+    .modal-badge-desc { font-size:0.72rem; font-weight:600; color:#c0392b; background:#fdecea; border-radius:20px; padding:0.2rem 0.6rem; display:inline-block; margin-bottom:0.5rem; }
     /* EMPTY / LOADING */
     .empty { grid-column:1/-1; text-align:center; padding:4rem 2rem; color:var(--text-muted); }
     .empty h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; margin-bottom:0.5rem; color:var(--burgundy); }
@@ -280,7 +288,7 @@
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
   const WA_NUMBER = '584241808527'; // 
 
-  const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12 };
+  const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12, descuento:13 };
 
   let productos = [];
   let carrito = [];
@@ -331,7 +339,8 @@
     const cats = unique(productos.map(p => p[COL.categoria]));
     const bar = document.getElementById('cat-bar-inner');
     bar.innerHTML = `<button class="cat-pill active" data-cat="">Todos</button>` +
-      cats.map(c => `<button class="cat-pill" data-cat="${c}">${c}</button>`).join('');
+      cats.map(c => `<button class="cat-pill" data-cat="${c}">${c}</button>`).join('') +
+      `<button class="cat-pill liquidacion" data-cat="__liquidacion__">🏷 Liquidación</button>`;
     bar.querySelectorAll('.cat-pill').forEach(pill => {
       pill.addEventListener('click', () => {
         bar.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
@@ -346,7 +355,9 @@
   function filtrar() {
     return productos.filter(p => {
       if (parseInt(p[COL.stock]) <= 0) return false;
-      if (filtros.categoria && p[COL.categoria] !== filtros.categoria) return false;
+      if (filtros.categoria === '__liquidacion__') {
+        const d = parseFloat(p[COL.descuento]); if (isNaN(d) || d <= 0) return false;
+      } else if (filtros.categoria && p[COL.categoria] !== filtros.categoria) return false;
       if (filtros.material && p[COL.material] !== filtros.material) return false;
       if (filtros.color && p[COL.color1] !== filtros.color && p[COL.color2] !== filtros.color) return false;
       if (filtros.tamano && p[COL.tamano] !== filtros.tamano) return false;
@@ -373,6 +384,16 @@
         ? `<img src="${fotos[0]}" alt="${p[COL.nombre]}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=no-img>💎<span>Sin foto</span></div>'">`
         : `<div class="no-img">💎<span>Sin foto</span></div>`;
       const inCart = carrito.some(c => c.id === p[COL.id]);
+      const descPct = parseFloat(p[COL.descuento]);
+      const tieneDesc = !isNaN(descPct) && descPct > 0;
+      const precioFinal = tieneDesc ? precio * (1 - descPct / 100) : precio;
+      const precioHTML = tieneDesc
+        ? `<div class="precio-wrap">
+            <span class="precio-original">$${precio.toFixed(2)}</span>
+            <span class="precio-desc">$${precioFinal.toFixed(2)}</span>
+            <span class="badge-desc">-${Math.round(descPct)}% OFF</span>
+           </div>`
+        : `<div class="card-price">$${precio.toFixed(2)}</div>`;
       return `
         <div class="card" style="animation-delay:${i*0.04}s" data-idx="${productos.indexOf(p)}">
           <div class="card-img-wrap">${imgHTML}</div>
@@ -380,7 +401,7 @@
             <div class="card-cat">${p[COL.categoria]}</div>
             <div class="card-name">${p[COL.nombre]}</div>
             <div class="card-footer">
-              <div class="card-price">${!isNaN(precio) ? '$'+precio.toFixed(2) : p[COL.precio]}</div>
+              ${precioHTML}
               <button class="btn-carrito${inCart?' added':''}" data-idx="${productos.indexOf(p)}">${inCart ? '✓ Agregado' : '+ Carrito'}</button>
             </div>
           </div>
@@ -402,7 +423,10 @@
   function agregarCarrito(idx) {
     const p = productos[idx];
     if (!carrito.some(c => c.id === p[COL.id])) {
-      carrito.push({ id: p[COL.id], nombre: p[COL.nombre], precio: parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0, foto: p[COL.foto1] });
+      const pBase = parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
+      const pDesc = parseFloat(p[COL.descuento]);
+      const pFinal = (!isNaN(pDesc) && pDesc > 0) ? pBase * (1 - pDesc/100) : pBase;
+      carrito.push({ id: p[COL.id], nombre: p[COL.nombre], precio: pFinal, foto: p[COL.foto1] });
     }
     actualizarCarrito();
     renderGrid();
@@ -455,7 +479,15 @@
 
     document.getElementById('modal-cat').textContent = p[COL.categoria];
     document.getElementById('modal-name').textContent = p[COL.nombre];
-    document.getElementById('modal-price').textContent = !isNaN(precio) ? '$' + precio.toFixed(2) : p[COL.precio];
+    const mDescPct = parseFloat(p[COL.descuento]);
+    const mTieneDesc = !isNaN(mDescPct) && mDescPct > 0;
+    const mPrecioFinal = mTieneDesc ? precio * (1 - mDescPct/100) : precio;
+    const priceEl = document.getElementById('modal-price');
+    if (mTieneDesc) {
+      priceEl.innerHTML = `<div class="modal-precio-original">$${precio.toFixed(2)}</div><div>$${mPrecioFinal.toFixed(2)}</div><div class="modal-badge-desc">-${Math.round(mDescPct)}% OFF</div>`;
+    } else {
+      priceEl.textContent = !isNaN(precio) ? '$' + precio.toFixed(2) : p[COL.precio];
+    }
 
     const mainImg = document.getElementById('modal-main-img');
     if (fotos.length) { mainImg.src = fotos[0]; mainImg.style.display = 'block'; }
@@ -490,6 +522,7 @@
       ['Material', p[COL.material]], ['Color principal', p[COL.color1]],
       ['Color secundario', p[COL.color2]], ['Tamaño', p[COL.tamano]],
       ['Disponibilidad', '✅ Disponible'],
+      ['Notas', p[COL.notas]],
     ].filter(d => d[1]);
     document.getElementById('modal-details').innerHTML = details.map(d => `<div class="detail-item"><strong>${d[0]}</strong>${d[1]}</div>`).join('');
 
