@@ -368,7 +368,7 @@
     }
     document.getElementById('grid').innerHTML = lista.map((p, i) => {
       const fotos = [p[COL.foto1], p[COL.foto2], p[COL.foto3]].filter(Boolean);
-      const rawP = String(p[COL.precio]).replace(/[^0-9.]/g, ''); const precio = parseFloat(rawP) || 0;
+      const precio = parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
       const imgHTML = fotos.length
         ? `<img src="${fotos[0]}" alt="${p[COL.nombre]}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=no-img>💎<span>Sin foto</span></div>'">`
         : `<div class="no-img">💎<span>Sin foto</span></div>`;
@@ -402,7 +402,7 @@
   function agregarCarrito(idx) {
     const p = productos[idx];
     if (!carrito.some(c => c.id === p[COL.id])) {
-      const rawPrecio = String(p[COL.precio]).replace(/[^0-9.]/g, ''); carrito.push({ id: p[COL.id], nombre: p[COL.nombre], precio: parseFloat(rawPrecio) || 0, foto: p[COL.foto1] });
+      carrito.push({ id: p[COL.id], nombre: p[COL.nombre], precio: parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0, foto: p[COL.foto1] });
     }
     actualizarCarrito();
     renderGrid();
@@ -451,7 +451,7 @@
     modalIdx = idx;
     const p = productos[idx];
     const fotos = [p[COL.foto1], p[COL.foto2], p[COL.foto3]].filter(Boolean);
-    const rawP = String(p[COL.precio]).replace(/[^0-9.]/g, ''); const precio = parseFloat(rawP) || 0;
+    const precio = parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
 
     document.getElementById('modal-cat').textContent = p[COL.categoria];
     document.getElementById('modal-name').textContent = p[COL.nombre];
