@@ -139,10 +139,15 @@
     .modal-inner { display:grid; grid-template-columns:1fr 1fr; min-height:400px; }
     .modal-img-col { position:relative; background:var(--beige); border-radius:16px 0 0 16px; overflow:hidden; }
     .modal-main-img { width:100%; height:100%; object-fit:cover; display:block; min-height:320px; }
-    .modal-thumbnails { display:flex; gap:0.4rem; padding:0.6rem; position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(0,0,0,0.2)); }
-    .modal-thumb { width:44px; height:44px; border-radius:6px; overflow:hidden; border:2px solid transparent; cursor:pointer; flex-shrink:0; }
-    .modal-thumb.active { border-color:var(--white); }
-    .modal-thumb img { width:100%; height:100%; object-fit:cover; }
+    .modal-thumbnails { display:none; }
+    .modal-arrow { position:absolute; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.88); border:none; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,0.15); transition:background 0.2s; }
+    .modal-arrow:hover { background:var(--white); }
+    .modal-arrow.prev { left:0.6rem; }
+    .modal-arrow.next { right:0.6rem; }
+    .modal-arrow.hidden { display:none; }
+    .modal-foto-dots { position:absolute; bottom:0.6rem; left:50%; transform:translateX(-50%); display:flex; gap:5px; }
+    .modal-foto-dots span { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.5); transition:background 0.2s; }
+    .modal-foto-dots span.active { background:var(--white); }
     .modal-close-x { position:absolute; top:0.75rem; right:0.75rem; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.9); border:none; cursor:pointer; font-size:0.9rem; display:flex; align-items:center; justify-content:center; z-index:10; }
     .modal-info-col { padding:1.75rem; display:flex; flex-direction:column; }
     .modal-cat { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--burgundy); font-weight:500; margin-bottom:0.35rem; }
@@ -251,7 +256,10 @@
     <div class="modal-inner">
       <div class="modal-img-col">
         <button class="modal-close-x" id="modal-close-x">✕</button>
+        <button class="modal-arrow prev hidden" id="modal-prev">&#8592;</button>
+        <button class="modal-arrow next hidden" id="modal-next">&#8594;</button>
         <img class="modal-main-img" id="modal-main-img" src="" alt=""/>
+        <div class="modal-foto-dots" id="modal-foto-dots"></div>
         <div class="modal-thumbnails" id="modal-thumbnails"></div>
       </div>
       <div class="modal-info-col">
@@ -270,7 +278,7 @@
 
 <script>
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
-  const WA_NUMBER = '584121234567'; // ← Tu número real aquí
+  const WA_NUMBER = '584241808527'; 
 
   const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12 };
 
@@ -453,16 +461,30 @@
     if (fotos.length) { mainImg.src = fotos[0]; mainImg.style.display = 'block'; }
     else { mainImg.style.display = 'none'; }
 
-    const thumbs = document.getElementById('modal-thumbnails');
-    thumbs.innerHTML = fotos.length > 1
-      ? fotos.map((f, i) => `<div class="modal-thumb${i===0?' active':''}" data-i="${i}"><img src="${f}" alt=""/></div>`).join('') : '';
-    thumbs.querySelectorAll('.modal-thumb').forEach(t => {
-      t.addEventListener('click', () => {
-        mainImg.src = fotos[parseInt(t.dataset.i)];
-        thumbs.querySelectorAll('.modal-thumb').forEach(x => x.classList.remove('active'));
-        t.classList.add('active');
-      });
-    });
+    let fotoIdx = 0;
+    function goToFoto(i) {
+      fotoIdx = i;
+      mainImg.src = fotos[fotoIdx];
+      document.getElementById('modal-prev').classList.toggle('hidden', fotoIdx === 0);
+      document.getElementById('modal-next').classList.toggle('hidden', fotoIdx === fotos.length - 1);
+      document.querySelectorAll('#modal-foto-dots span').forEach((d, di) => d.classList.toggle('active', di === fotoIdx));
+    }
+    const prevBtn = document.getElementById('modal-prev');
+    const nextBtn = document.getElementById('modal-next');
+    prevBtn.onclick = (e) => { e.stopPropagation(); goToFoto(fotoIdx - 1); };
+    nextBtn.onclick = (e) => { e.stopPropagation(); goToFoto(fotoIdx + 1); };
+    const dotsEl = document.getElementById('modal-foto-dots');
+    if (fotos.length > 1) {
+      dotsEl.innerHTML = fotos.map((_, i) => `<span class="${i===0?'active':''}"></span>`).join('');
+      dotsEl.style.display = 'flex';
+      nextBtn.classList.remove('hidden');
+      prevBtn.classList.add('hidden');
+    } else {
+      dotsEl.innerHTML = '';
+      dotsEl.style.display = 'none';
+      prevBtn.classList.add('hidden');
+      nextBtn.classList.add('hidden');
+    }
 
     const details = [
       ['Material', p[COL.material]], ['Color principal', p[COL.color1]],
