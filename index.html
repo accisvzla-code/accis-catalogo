@@ -52,6 +52,8 @@
     .cat-pill.active { background: var(--burgundy); color: var(--white); border-color: var(--burgundy); }
     .cat-pill.liquidacion { border-color:#c0392b; color:#c0392b; font-weight:500; }
     .cat-pill.liquidacion.active { background:#c0392b; color:var(--white); border-color:#c0392b; }
+    .cat-pill.nuevo-pill { border-color:#b07d3a; color:#b07d3a; font-weight:500; }
+    .cat-pill.nuevo-pill.active { background:#b07d3a; color:var(--white); border-color:#b07d3a; }
 
     /* FILTERS PANEL */
     .filters-bar { background: var(--white); border-bottom: 1px solid var(--border); }
@@ -106,6 +108,7 @@
     .precio-wrap { display:flex; flex-direction:column; gap:0.1rem; }
     .precio-original { font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--text-muted); text-decoration:line-through; line-height:1; }
     .precio-desc { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:var(--burgundy); line-height:1; }
+    .badge-nuevo { position:absolute; top:0.6rem; right:0.6rem; background:#814256; color:#fff; font-size:0.6rem; font-weight:600; letter-spacing:0.06em; padding:0.2rem 0.5rem; border-radius:20px; z-index:2; }
     .badge-desc { font-size:0.6rem; font-weight:600; color:#c0392b; background:#fdecea; border-radius:20px; padding:0.15rem 0.4rem; letter-spacing:0.04em; display:inline-block; margin-top:0.15rem; }
     .modal-precio-original { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--text-muted); text-decoration:line-through; margin-bottom:0.1rem; }
     .modal-badge-desc { font-size:0.72rem; font-weight:600; color:#c0392b; background:#fdecea; border-radius:20px; padding:0.2rem 0.6rem; display:inline-block; margin-bottom:0.5rem; }
@@ -288,7 +291,7 @@
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
   const WA_NUMBER = '584241808527'; // 
 
-  const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12, descuento:13 };
+  const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12, descuento:13, nuevo:14 };
 
   let productos = [];
   let carrito = [];
@@ -339,6 +342,7 @@
     const cats = unique(productos.map(p => p[COL.categoria]));
     const bar = document.getElementById('cat-bar-inner');
     bar.innerHTML = `<button class="cat-pill active" data-cat="">Todos</button>` +
+      `<button class="cat-pill nuevo-pill" data-cat="__nuevo__">✨ Lo nuevo</button>` +
       cats.map(c => `<button class="cat-pill" data-cat="${c}">${c}</button>`).join('') +
       `<button class="cat-pill liquidacion" data-cat="__liquidacion__">🏷 Liquidación</button>`;
     bar.querySelectorAll('.cat-pill').forEach(pill => {
@@ -357,6 +361,8 @@
       if (parseInt(p[COL.stock]) <= 0) return false;
       if (filtros.categoria === '__liquidacion__') {
         const d = parseFloat(p[COL.descuento]); if (isNaN(d) || d <= 0) return false;
+      } else if (filtros.categoria === '__nuevo__') {
+        const n = p[COL.nuevo]; if (!n || n.trim() === '' || n.trim() === '0') return false;
       } else if (filtros.categoria && p[COL.categoria] !== filtros.categoria) return false;
       if (filtros.material && p[COL.material] !== filtros.material) return false;
       if (filtros.color && p[COL.color1] !== filtros.color && p[COL.color2] !== filtros.color) return false;
@@ -396,7 +402,10 @@
         : `<div class="card-price">$${precio.toFixed(2)}</div>`;
       return `
         <div class="card" style="animation-delay:${i*0.04}s" data-idx="${productos.indexOf(p)}">
-          <div class="card-img-wrap">${imgHTML}</div>
+          <div class="card-img-wrap">
+            ${imgHTML}
+            ${(p[COL.nuevo] && p[COL.nuevo].trim() && p[COL.nuevo].trim() !== '0') ? '<div class="badge-nuevo">✨ Nuevo</div>' : ''}
+          </div>
           <div class="card-body">
             <div class="card-cat">${p[COL.categoria]}</div>
             <div class="card-name">${p[COL.nombre]}</div>
