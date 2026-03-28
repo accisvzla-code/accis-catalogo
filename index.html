@@ -278,7 +278,7 @@
 
 <script>
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
-  const WA_NUMBER = '584241808527'; 
+  const WA_NUMBER = '584241808527'; // 
 
   const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12 };
 
@@ -368,7 +368,7 @@
     }
     document.getElementById('grid').innerHTML = lista.map((p, i) => {
       const fotos = [p[COL.foto1], p[COL.foto2], p[COL.foto3]].filter(Boolean);
-      const precio = parseFloat(p[COL.precio]);
+      const rawP = String(p[COL.precio]).replace(/[^0-9.]/g, ''); const precio = parseFloat(rawP) || 0;
       const imgHTML = fotos.length
         ? `<img src="${fotos[0]}" alt="${p[COL.nombre]}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=no-img>💎<span>Sin foto</span></div>'">`
         : `<div class="no-img">💎<span>Sin foto</span></div>`;
@@ -402,7 +402,7 @@
   function agregarCarrito(idx) {
     const p = productos[idx];
     if (!carrito.some(c => c.id === p[COL.id])) {
-      carrito.push({ id: p[COL.id], nombre: p[COL.nombre], precio: parseFloat(p[COL.precio]), foto: p[COL.foto1] });
+      const rawPrecio = String(p[COL.precio]).replace(/[^0-9.]/g, ''); carrito.push({ id: p[COL.id], nombre: p[COL.nombre], precio: parseFloat(rawPrecio) || 0, foto: p[COL.foto1] });
     }
     actualizarCarrito();
     renderGrid();
@@ -451,7 +451,7 @@
     modalIdx = idx;
     const p = productos[idx];
     const fotos = [p[COL.foto1], p[COL.foto2], p[COL.foto3]].filter(Boolean);
-    const precio = parseFloat(p[COL.precio]);
+    const rawP = String(p[COL.precio]).replace(/[^0-9.]/g, ''); const precio = parseFloat(rawP) || 0;
 
     document.getElementById('modal-cat').textContent = p[COL.categoria];
     document.getElementById('modal-name').textContent = p[COL.nombre];
