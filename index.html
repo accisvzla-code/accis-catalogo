@@ -3,185 +3,274 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Accis Venezuela — Catálogo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <title>Accis Venezuela</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --burgundy: #814256;
       --beige: #f2e9e1;
+      --beige-dark: #e8ddd4;
       --white: #ffffff;
       --burgundy-dark: #5e2f3e;
       --text: #2e1a21;
       --text-muted: #9c7a84;
       --border: #e0d0d6;
-      --card-shadow: 0 2px 16px rgba(129,66,86,0.08);
-      --card-shadow-hover: 0 8px 32px rgba(129,66,86,0.18);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--beige); color: var(--text); min-height: 100vh; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Jost', sans-serif; background: var(--beige); color: var(--text); overflow-x: hidden; }
 
-    /* HEADER */
-    header { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 1.5rem; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; height: 68px; }
-    .logo-img { height: 44px; width: auto; }
-    .header-right { display: flex; align-items: center; gap: 1rem; }
-    .btn-compra-header {
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+      background: rgba(242,233,225,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(224,208,214,0.4);
+      transition: background 0.3s;
+    }
+    .logo-img { height: 38px; width: auto; }
+    .header-wa {
       display: inline-flex; align-items: center; gap: 0.4rem;
-      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500;
-      padding: 0.5rem 1.1rem; border-radius: 24px;
-      background: #25D366; color: var(--white); text-decoration: none;
-      transition: background 0.2s; white-space: nowrap;
+      font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 500;
+      padding: 0.45rem 1rem; border-radius: 24px;
+      background: #25D366; color: #fff; text-decoration: none;
+      transition: background 0.2s; letter-spacing: 0.03em;
     }
-    .btn-compra-header:hover { background: #1da851; }
-    .cart-btn { position: relative; background: var(--burgundy); color: var(--white); border: none; border-radius: 24px; padding: 0.5rem 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: background 0.2s; }
-    .cart-btn:hover { background: var(--burgundy-dark); }
-    .cart-count { background: var(--white); color: var(--burgundy); border-radius: 50%; width: 18px; height: 18px; font-size: 0.65rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+    .header-wa:hover { background: #1da851; }
 
-    /* HERO */
-    .hero { background: var(--burgundy); color: var(--white); text-align: center; padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(255,255,255,0.06) 0%, transparent 60%); }
-    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 300; letter-spacing: 0.04em; margin-bottom: 0.4rem; }
-    .hero h1 em { font-style: italic; }
-    .hero p { font-size: 0.8rem; opacity: 0.7; letter-spacing: 0.08em; text-transform: uppercase; }
-
-    /* CATEGORY BAR */
-    .cat-bar { background: var(--white); border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
-    .cat-bar::-webkit-scrollbar { display: none; }
-    .cat-bar-inner { display: inline-flex; gap: 0.5rem; }
-    .cat-pill { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-    .cat-pill:hover { border-color: var(--burgundy); color: var(--burgundy); }
-    .cat-pill.active { background: var(--burgundy); color: var(--white); border-color: var(--burgundy); }
-    .cat-pill.liquidacion { border-color:#c0392b; color:#c0392b; font-weight:500; }
-    .cat-pill.liquidacion.active { background:#c0392b; color:var(--white); border-color:#c0392b; }
-    .cat-pill.nuevo-pill { border-color:#b07d3a; color:#b07d3a; font-weight:500; }
-    .cat-pill.nuevo-pill.active { background:#b07d3a; color:var(--white); border-color:#b07d3a; }
-
-    /* FILTERS PANEL */
-    .filters-bar { background: var(--white); border-bottom: 1px solid var(--border); }
-    .filters-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.5rem; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--text); }
-    .filters-toggle span { display: flex; align-items: center; gap: 0.5rem; font-weight: 500; }
-    .filters-toggle .arrow { transition: transform 0.2s; font-size: 0.7rem; }
-    .filters-toggle.open .arrow { transform: rotate(180deg); }
-    .filters-panel { display: none; padding: 0 1.5rem 1rem; }
-    .filters-panel.open { display: block; }
-    .filters-inner { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
-    .filter-select {
-      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; padding: 0.4rem 1.8rem 0.4rem 0.9rem;
-      border: 1px solid var(--border); border-radius: 20px; background: var(--beige); color: var(--text);
-      cursor: pointer; outline: none; appearance: none; -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23814256'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 0.6rem center; background-size: 8px; background-color: var(--beige);
-      transition: border-color 0.2s;
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--beige);
     }
-    .filter-select:focus, .filter-select:hover { border-color: var(--burgundy); }
-    .search-wrap { position: relative; }
-    .search-input { font-family: 'DM Sans', sans-serif; font-size: 0.8rem; padding: 0.4rem 0.9rem 0.4rem 2rem; border: 1px solid var(--border); border-radius: 20px; background: var(--beige); color: var(--text); outline: none; width: 180px; transition: border-color 0.2s; }
-    .search-input:focus { border-color: var(--burgundy); }
-    .search-icon { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.78rem; pointer-events: none; }
-    .btn-clear { font-size: 0.75rem; padding: 0.4rem 0.9rem; border: 1px solid var(--burgundy); border-radius: 20px; background: transparent; color: var(--burgundy); cursor: pointer; transition: all 0.2s; }
-    .btn-clear:hover { background: var(--burgundy); color: var(--white); }
 
-    /* MAIN */
-    main { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
-    .results-info { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    /* Decorative circles */
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(129,66,86,0.1);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: breathe 6s ease-in-out infinite;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      border: 1px solid rgba(129,66,86,0.08);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: breathe 6s ease-in-out infinite 1s;
+    }
+    @keyframes breathe {
+      0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; }
+      50% { transform: translate(-50%,-50%) scale(1.04); opacity: 1; }
+    }
 
-    /* GRID */
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+    .hero-logo {
+      width: min(260px, 65vw);
+      margin-bottom: 2rem;
+      animation: fadeDown 0.9s ease both;
+      position: relative; z-index: 1;
+    }
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
 
-    /* CARD */
-    .card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--card-shadow); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; animation: fadeUp 0.4s ease both; }
-    @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
-    .card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
-    /* Portrait ratio ~4:5 like IG post */
-    .card-img-wrap { position: relative; width: 100%; padding-top: 125%; background: var(--beige); overflow: hidden; }
-    .card-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-    .card:hover .card-img-wrap img { transform: scale(1.04); }
-    .no-img { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 2.5rem; gap: 0.3rem; }
-    .no-img span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
-    .card-body { padding: 0.8rem 1rem 1rem; }
-    .card-cat { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--burgundy); font-weight: 500; margin-bottom: 0.2rem; }
-    .card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.3; margin-bottom: 0.45rem; }
-    .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-    .card-price { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--burgundy); }
-    .btn-carrito { font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 500; padding: 0.32rem 0.75rem; border-radius: 20px; border: 1.5px solid var(--burgundy); background: transparent; color: var(--burgundy); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-    .btn-carrito:hover, .btn-carrito.added { background: var(--burgundy); color: var(--white); }
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.9s ease 0.2s both;
+      position: relative; z-index: 1;
+    }
+    .hero-tagline em { font-style: italic; color: var(--burgundy); }
 
-    .precio-wrap { display:flex; flex-direction:column; gap:0.1rem; }
-    .precio-original { font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--text-muted); text-decoration:line-through; line-height:1; }
-    .precio-desc { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:var(--burgundy); line-height:1; }
-    .badge-nuevo { position:absolute; top:0.6rem; right:0.6rem; background:#814256; color:#fff; font-size:0.6rem; font-weight:600; letter-spacing:0.06em; padding:0.2rem 0.5rem; border-radius:20px; z-index:2; }
-    .badge-desc { font-size:0.6rem; font-weight:600; color:#c0392b; background:#fdecea; border-radius:20px; padding:0.15rem 0.4rem; letter-spacing:0.04em; display:inline-block; margin-top:0.15rem; }
-    .modal-precio-original { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--text-muted); text-decoration:line-through; margin-bottom:0.1rem; }
-    .modal-badge-desc { font-size:0.72rem; font-weight:600; color:#c0392b; background:#fdecea; border-radius:20px; padding:0.2rem 0.6rem; display:inline-block; margin-bottom:0.5rem; }
-    /* EMPTY / LOADING */
-    .empty { grid-column:1/-1; text-align:center; padding:4rem 2rem; color:var(--text-muted); }
-    .empty h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; margin-bottom:0.5rem; color:var(--burgundy); }
-    .loading { grid-column:1/-1; text-align:center; padding:4rem 2rem; }
-    .spinner { width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--burgundy); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 1rem; }
-    @keyframes spin { to { transform:rotate(360deg); } }
+    .hero-sub {
+      font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 2.5rem;
+      animation: fadeUp 0.9s ease 0.35s both;
+      position: relative; z-index: 1;
+    }
 
-    /* CART PANEL */
-    .cart-overlay { display:none; position:fixed; inset:0; background:rgba(46,26,33,0.45); z-index:300; }
-    .cart-overlay.open { display:block; }
-    .cart-panel { position:fixed; top:0; right:0; height:100%; width:min(360px,100vw); background:var(--white); z-index:301; box-shadow:-4px 0 24px rgba(0,0,0,0.12); display:flex; flex-direction:column; transform:translateX(100%); transition:transform 0.3s ease; }
-    .cart-panel.open { transform:translateX(0); }
-    .cart-header { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid var(--border); }
-    .cart-header h2 { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:400; }
-    .cart-close { background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-muted); }
-    .cart-items { flex:1; overflow-y:auto; padding:1rem 1.5rem; }
-    .cart-empty { text-align:center; padding:3rem 1rem; color:var(--text-muted); font-size:0.85rem; }
-    .cart-item { display:flex; gap:0.75rem; padding:0.75rem 0; border-bottom:1px solid var(--border); align-items:center; }
-    .cart-item-img { width:52px; height:52px; border-radius:8px; object-fit:cover; background:var(--beige); flex-shrink:0; }
-    .cart-item-info { flex:1; min-width:0; }
-    .cart-item-name { font-size:0.82rem; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .cart-item-price { font-size:0.78rem; color:var(--burgundy); font-weight:500; margin-top:0.1rem; }
-    .cart-item-remove { background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1rem; padding:0.2rem; flex-shrink:0; }
-    .cart-footer { padding:1.25rem 1.5rem; border-top:1px solid var(--border); }
-    .cart-total { display:flex; justify-content:space-between; font-size:0.9rem; font-weight:500; margin-bottom:1rem; }
-    .cart-total span:last-child { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--burgundy); }
-    .btn-wa-cart { width:100%; display:flex; align-items:center; justify-content:center; gap:0.5rem; padding:0.8rem; border-radius:24px; background:#25D366; color:var(--white); border:none; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; transition:background 0.2s; text-decoration:none; }
-    .btn-wa-cart:hover { background:#1da851; }
-    .btn-vaciar { width:100%; margin-top:0.5rem; padding:0.6rem; border-radius:24px; border:1px solid var(--border); background:none; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:0.8rem; cursor:pointer; }
+    .hero-cta {
+      display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.9s ease 0.5s both;
+      position: relative; z-index: 1;
+    }
+    .btn-primary {
+      font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.8rem 2rem; border-radius: 32px;
+      background: var(--burgundy); color: #fff; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--burgundy-dark); transform: translateY(-2px); }
+    .btn-outline {
+      font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 400;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.8rem 2rem; border-radius: 32px;
+      border: 1.5px solid var(--burgundy); color: var(--burgundy); text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: var(--burgundy); color: #fff; transform: translateY(-2px); }
 
-    /* PRODUCT MODAL */
-    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(46,26,33,0.55); z-index:200; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(3px); }
-    .modal-overlay.open { display:flex; }
-    .modal { background:var(--white); border-radius:16px; max-width:820px; width:100%; max-height:92vh; overflow-y:auto; animation:modalIn 0.25s ease; }
-    @keyframes modalIn { from{opacity:0;transform:scale(0.95);} to{opacity:1;transform:scale(1);} }
-    .modal-inner { display:grid; grid-template-columns:1fr 1fr; min-height:400px; }
-    .modal-img-col { position:relative; background:var(--beige); border-radius:16px 0 0 16px; overflow:hidden; }
-    .modal-main-img { width:100%; height:100%; object-fit:cover; display:block; min-height:320px; }
-    .modal-thumbnails { display:none; }
-    .modal-arrow { position:absolute; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.88); border:none; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,0.15); transition:background 0.2s; }
-    .modal-arrow:hover { background:var(--white); }
-    .modal-arrow.prev { left:0.6rem; }
-    .modal-arrow.next { right:0.6rem; }
-    .modal-arrow.hidden { display:none; }
-    .modal-foto-dots { position:absolute; bottom:0.6rem; left:50%; transform:translateX(-50%); display:flex; gap:5px; }
-    .modal-foto-dots span { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.5); transition:background 0.2s; }
-    .modal-foto-dots span.active { background:var(--white); }
-    .modal-close-x { position:absolute; top:0.75rem; right:0.75rem; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.9); border:none; cursor:pointer; font-size:0.9rem; display:flex; align-items:center; justify-content:center; z-index:10; }
-    .modal-info-col { padding:1.75rem; display:flex; flex-direction:column; }
-    .modal-cat { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--burgundy); font-weight:500; margin-bottom:0.35rem; }
-    .modal-name { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:400; line-height:1.2; margin-bottom:0.75rem; }
-    .modal-price { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:600; color:var(--burgundy); margin-bottom:1.25rem; }
-    .modal-details { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem; flex:1; }
-    .detail-item { font-size:0.8rem; display:flex; gap:0.5rem; }
-    .detail-item strong { color:var(--text-muted); font-weight:400; min-width:110px; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; }
-    .modal-actions { display:flex; flex-direction:column; gap:0.6rem; }
-    .btn-add-modal { padding:0.75rem; border-radius:24px; border:2px solid var(--burgundy); background:transparent; color:var(--burgundy); font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:500; cursor:pointer; transition:all 0.2s; }
-    .btn-add-modal:hover { background:var(--burgundy); color:var(--white); }
-    .btn-close-modal { padding:0.6rem; border-radius:24px; border:1px solid var(--border); background:none; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:0.8rem; cursor:pointer; }
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      color: var(--text-muted); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      animation: fadeUp 1s ease 1s both;
+      z-index: 1;
+    }
+    .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--burgundy), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+    @keyframes scrollPulse { 0%,100%{opacity:0.4; transform:scaleY(1);} 50%{opacity:1; transform:scaleY(1.2);} }
 
-    /* FOOTER */
-    footer { text-align:center; padding:2rem; font-size:0.75rem; color:var(--text-muted); border-top:1px solid var(--border); margin-top:3rem; }
-    footer a { color:var(--burgundy); text-decoration:none; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
 
-    @media(max-width:640px) {
-      .modal-inner { grid-template-columns:1fr; }
-      .modal-img-col { border-radius:16px 16px 0 0; min-height:260px; }
-      .modal-main-img { min-height:260px; }
-      .grid { grid-template-columns:repeat(2,1fr); gap:0.75rem; }
-      .header-right .btn-compra-header span { display:none; }
+    /* ── SECTION HEADER ── */
+    .section-header {
+      text-align: center; padding: 4rem 2rem 2rem;
+    }
+    .section-label {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--burgundy); margin-bottom: 0.75rem; display: block;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300; color: var(--text); line-height: 1.2;
+    }
+    .section-title em { font-style: italic; }
+    .section-line {
+      width: 40px; height: 1px; background: var(--burgundy);
+      margin: 1.25rem auto 0; opacity: 0.5;
+    }
+
+    /* ── CATEGORIES GRID ── */
+    .categories { padding: 1rem 1.5rem 5rem; max-width: 1100px; margin: 0 auto; }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    /* First item spans 2 columns */
+    .cat-card:first-child { grid-column: span 2; }
+
+    .cat-card {
+      position: relative; overflow: hidden; border-radius: 16px;
+      cursor: pointer; text-decoration: none;
+      background: var(--beige-dark);
+      aspect-ratio: 1 / 1;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .cat-card:first-child { aspect-ratio: 2 / 1; }
+    .cat-card:hover { transform: translateY(-4px); }
+
+    .cat-card-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--beige-dark), var(--beige));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      transition: transform 0.4s ease;
+    }
+    .cat-card:hover .cat-card-bg { transform: scale(1.05); }
+
+    .cat-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(94,47,62,0.75) 0%, rgba(94,47,62,0.1) 55%, transparent 100%);
+      transition: opacity 0.3s;
+    }
+    .cat-card:hover .cat-card-overlay { opacity: 0.9; }
+
+    .cat-card-body {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 1.25rem 1.25rem 1rem;
+      color: #fff;
+    }
+    .cat-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 400; line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+    .cat-card-link {
+      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0.75; display: inline-flex; align-items: center; gap: 0.3rem;
+      transition: opacity 0.2s;
+    }
+    .cat-card:hover .cat-card-link { opacity: 1; }
+
+    /* ── BRAND STRIP ── */
+    .brand-strip {
+      background: var(--burgundy); color: #fff;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .brand-strip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.05), transparent 60%);
+    }
+    .brand-strip-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6; margin-bottom: 1rem; display: block; }
+    .brand-strip-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 300; font-style: italic;
+      line-height: 1.3; max-width: 560px; margin: 0 auto 2rem;
+    }
+    .brand-strip-sub { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; }
+
+    /* ── FEATURES ── */
+    .features { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center; }
+    .feature-icon { font-size: 1.8rem; margin-bottom: 0.75rem; display: block; }
+    .feature-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--burgundy); margin-bottom: 0.4rem; }
+    .feature-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.6);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-logo { height: 32px; margin-bottom: 1rem; opacity: 0.8; filter: brightness(10); }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy { font-size: 0.7rem; opacity: 0.4; }
+
+    .hero-cat-pill {
+      font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 400;
+      letter-spacing: 0.05em;
+      padding: 0.55rem 1.2rem; border-radius: 32px;
+      border: 1.5px solid var(--burgundy); color: var(--burgundy);
+      background: rgba(255,255,255,0.6);
+      text-decoration: none; white-space: nowrap;
+      transition: all 0.2s; backdrop-filter: blur(4px);
+    }
+    .hero-cat-pill:hover { background: var(--burgundy); color: #fff; transform: translateY(-2px); }
+    .hero-cta { flex-wrap: wrap; max-width: 560px; }
+
+    @media (max-width: 600px) {
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .cat-card:first-child { grid-column: span 2; aspect-ratio: 16/9; }
+      .features-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     }
   </style>
 </head>
@@ -189,116 +278,104 @@
 
 <header>
   <img class="logo-img" src="ACCIS.png" alt="Accis Venezuela"/>
-  <div class="header-right">
-    <a class="btn-compra-header" href="REPLACE_WA_HEADER" target="_blank">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      <span>Compra aquí</span>
-    </a>
-    <button class="cart-btn" id="cart-btn">
-      🛒 Carrito <span class="cart-count" id="cart-count">0</span>
-    </button>
-  </div>
+  <a class="header-wa" href="https://wa.me/584121234567?text=Hola!%20Quiero%20ver%20el%20cat%C3%A1logo%20de%20Accis%20Venezuela%20%F0%9F%92%8E" target="_blank">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Escríbenos
+  </a>
 </header>
 
-<div class="hero">
-  <h1>Nuestro <em>catálogo</em></h1>
-  <p>Bisutería y accesorios · Venezuela</p>
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-logo" src="ACCIS.png" alt="Accis Venezuela"/>
+  <h1 class="hero-tagline">Cada día,<br><em>más tú</em></h1>
+  <p class="hero-sub">Bisutería · Accesorios · Venezuela</p>
+  <div class="hero-cta" id="hero-cats">
+    <a class="btn-outline" href="accis_catalogo.html">Cargando…</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Explorar</span>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<div class="section-header">
+  <span class="section-label">Lo que ofrecemos</span>
+  <h2 class="section-title">Encuentra tu<br><em>estilo favorito</em></h2>
+  <div class="section-line"></div>
 </div>
 
-<div class="cat-bar">
-  <div class="cat-bar-inner" id="cat-bar-inner">
-    <button class="cat-pill active" data-cat="">Todos</button>
+<div class="categories">
+  <div class="cat-grid" id="cat-grid">
+    <!-- Populated by JS from CSV -->
   </div>
 </div>
 
-<div class="filters-bar">
-  <button class="filters-toggle" id="filters-toggle">
-    <span>🔍 Filtros y búsqueda</span>
-    <span class="arrow">▼</span>
-  </button>
-  <div class="filters-panel" id="filters-panel">
-    <div class="filters-inner">
-      <select class="filter-select" id="f-material"><option value="">Material</option></select>
-      <select class="filter-select" id="f-color"><option value="">Color</option></select>
-      <select class="filter-select" id="f-tamano"><option value="">Tamaño</option></select>
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input class="search-input" id="search" type="text" placeholder="Buscar…"/>
-      </div>
-      <button class="btn-clear" id="btn-clear">Limpiar</button>
+<!-- BRAND STRIP -->
+<div class="brand-strip">
+  <span class="brand-strip-label">Nuestra filosofía</span>
+  <p class="brand-strip-quote">"Te atendemos como persona, no como pedido."</p>
+  <span class="brand-strip-sub">Accis Venezuela · Desde el corazón de Caracas</span>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="features-grid">
+    <div>
+      <span class="feature-icon">💎</span>
+      <div class="feature-title">Calidad accesible</div>
+      <p class="feature-desc">Piezas cuidadosamente seleccionadas para que luzcas bien sin gastar de más.</p>
+    </div>
+    <div>
+      <span class="feature-icon">🚚</span>
+      <div class="feature-title">Envío nacional</div>
+      <p class="feature-desc">Entregamos en toda Venezuela. Local en Caracas y envíos a cualquier estado.</p>
+    </div>
+    <div>
+      <span class="feature-icon">💬</span>
+      <div class="feature-title">Atención personal</div>
+      <p class="feature-desc">Escribenos por Instagram o WhatsApp y te asesoramos con gusto.</p>
     </div>
   </div>
 </div>
 
-<main>
-  <div class="results-info" id="results-info"></div>
-  <div class="grid" id="grid">
-    <div class="loading"><div class="spinner"></div><p style="font-size:0.85rem;color:var(--text-muted)">Cargando productos…</p></div>
-  </div>
-</main>
-
+<!-- FOOTER -->
 <footer>
-  <p>© Accis Venezuela · <a href="https://instagram.com/accis.vzla" target="_blank">@accis.vzla</a></p>
+  <img class="footer-logo" src="ACCIS.png" alt="Accis Venezuela"/>
+  <div class="footer-links">
+    <a href="accis_catalogo.html">Catálogo</a>
+    <a href="https://instagram.com/accis.vzla" target="_blank">Instagram</a>
+    <a href="https://wa.me/584241808527" target="_blank">WhatsApp</a>
+  </div>
+  <p class="footer-copy">© 2025 Accis Venezuela. Todos los derechos reservados.</p>
 </footer>
-
-<!-- CART PANEL -->
-<div class="cart-overlay" id="cart-overlay"></div>
-<div class="cart-panel" id="cart-panel">
-  <div class="cart-header">
-    <h2>🛒 Tu carrito</h2>
-    <button class="cart-close" id="cart-close">✕</button>
-  </div>
-  <div class="cart-items" id="cart-items">
-    <div class="cart-empty">Tu carrito está vacío</div>
-  </div>
-  <div class="cart-footer">
-    <div class="cart-total"><span>Total</span><span id="cart-total-price">$0.00</span></div>
-    <a class="btn-wa-cart" id="btn-wa-cart" href="#" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Enviar pedido por WhatsApp
-    </a>
-    <button class="btn-vaciar" id="btn-vaciar">Vaciar carrito</button>
-  </div>
-</div>
-
-<!-- PRODUCT MODAL -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
-    <div class="modal-inner">
-      <div class="modal-img-col">
-        <button class="modal-close-x" id="modal-close-x">✕</button>
-        <button class="modal-arrow prev hidden" id="modal-prev">&#8592;</button>
-        <button class="modal-arrow next hidden" id="modal-next">&#8594;</button>
-        <img class="modal-main-img" id="modal-main-img" src="" alt=""/>
-        <div class="modal-foto-dots" id="modal-foto-dots"></div>
-        <div class="modal-thumbnails" id="modal-thumbnails"></div>
-      </div>
-      <div class="modal-info-col">
-        <div class="modal-cat" id="modal-cat"></div>
-        <div class="modal-name" id="modal-name"></div>
-        <div class="modal-price" id="modal-price"></div>
-        <div class="modal-details" id="modal-details"></div>
-        <div class="modal-actions">
-          <button class="btn-add-modal" id="btn-add-modal">+ Agregar al carrito</button>
-          <button class="btn-close-modal" id="modal-close">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
-  const WA_NUMBER = '584241808527'; // 
 
-  const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12, descuento:13, nuevo:14 };
+  // Category emojis/icons
+  const CAT_ICONS = {
+    'Aretes': '✦', 'Collares': '✦', 'Pulseras': '✦', 'Anillos': '✦',
+    'Sets': '✦', 'Accesorios para el cabello': '✦', 'Carteras': '✦',
+    'Cintillo': '✦', 'Earcuff': '✦', 'Lentes': '✦', 'Monederos': '✦', 'Varios': '✦'
+  };
 
-  let productos = [];
-  let carrito = [];
-  let filtros = { categoria:'', material:'', color:'', tamano:'', busqueda:'' };
-  let modalIdx = null;
+  const CAT_EMOJIS = {
+    'Aretes': '💫', 'Collares': '📿', 'Pulseras': '✨', 'Anillos': '💍',
+    'Sets': '🎁', 'Accesorios para el cabello': '🌸', 'Carteras': '👜',
+    'Cintillo': '🌟', 'Earcuff': '💎', 'Lentes': '🕶️', 'Monederos': '👛', 'Varios': '💖'
+  };
 
-  // ── PARSE CSV ──
+  // Soft background colors per category
+  const CAT_COLORS = [
+    'linear-gradient(135deg,#f5ebe0,#e8d5c4)',
+    'linear-gradient(135deg,#ede0d4,#d6b8a8)',
+    'linear-gradient(135deg,#f0e6dc,#dfc9b8)',
+    'linear-gradient(135deg,#e8ddd4,#d4bfb4)',
+    'linear-gradient(135deg,#f2e8e0,#e0cfc4)',
+    'linear-gradient(135deg,#ede3d8,#d8c4b4)',
+  ];
+
   function parseCSV(text) {
     return text.trim().split('\n').slice(1).map(line => {
       const cols = []; let cur = '', inQ = false;
@@ -310,285 +387,66 @@
       }
       cols.push(cur.trim());
       return cols;
-    }).filter(r => r[COL.nombre] && r[COL.nombre] !== 'Nombre del Producto');
+    }).filter(r => r[1] && r[1] !== 'Nombre del Producto');
   }
 
-  // ── LOAD ──
-  async function cargarProductos() {
+  async function loadCategories() {
     try {
       const res = await fetch(SHEET_CSV + '&t=' + Date.now());
-      productos = parseCSV(await res.text());
-      poblarFiltros();
-      renderCatBar();
-      renderGrid();
-    } catch(e) {
-      document.getElementById('grid').innerHTML = `<div class="empty"><h3>No se pudo cargar</h3><p>Verifica tu conexión.</p></div>`;
-    }
-  }
+      const rows = parseCSV(await res.text());
 
-  function unique(arr) { return [...new Set(arr.filter(v => v && v.trim()))].sort(); }
+      // Filter visible, in-stock products (col 4 = stock, col 15 = oculto)
+      const visible = rows.filter(r => parseInt(r[4]) > 0 && (!r[15] || r[15].trim() === '' || r[15].trim() === '0'));
 
-  function poblarFiltros() {
-    fillSelect('f-material', unique(productos.map(p => p[COL.material])), 'Material');
-    fillSelect('f-color', unique([...productos.map(p => p[COL.color1]), ...productos.map(p => p[COL.color2])]), 'Color');
-    fillSelect('f-tamano', unique(productos.map(p => p[COL.tamano])), 'Tamaño');
-  }
-
-  function fillSelect(id, opts, label) {
-    document.getElementById(id).innerHTML = `<option value="">${label}</option>` + opts.map(o => `<option value="${o}">${o}</option>`).join('');
-  }
-
-  function renderCatBar() {
-    const cats = unique(productos.map(p => p[COL.categoria]));
-    const bar = document.getElementById('cat-bar-inner');
-    bar.innerHTML = `<button class="cat-pill active" data-cat="">Todos</button>` +
-      `<button class="cat-pill nuevo-pill" data-cat="__nuevo__">✨ Lo nuevo</button>` +
-      cats.map(c => `<button class="cat-pill" data-cat="${c}">${c}</button>`).join('') +
-      `<button class="cat-pill liquidacion" data-cat="__liquidacion__">🏷 Liquidación</button>`;
-    bar.querySelectorAll('.cat-pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        bar.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        filtros.categoria = pill.dataset.cat;
-        renderGrid();
+      // Get unique categories with first product image
+      const catMap = {};
+      visible.forEach(r => {
+        const cat = r[2];
+        if (cat && !catMap[cat]) {
+          catMap[cat] = { name: cat, foto: r[9] || '' };
+        }
       });
-    });
-  }
 
-  // ── FILTER ──
-  function filtrar() {
-    return productos.filter(p => {
-      if (parseInt(p[COL.stock]) <= 0) return false;
-      if (filtros.categoria === '__liquidacion__') {
-        const d = parseFloat(p[COL.descuento]); if (isNaN(d) || d <= 0) return false;
-      } else if (filtros.categoria === '__nuevo__') {
-        const n = p[COL.nuevo]; if (!n || n.trim() === '' || n.trim() === '0') return false;
-      } else if (filtros.categoria && p[COL.categoria] !== filtros.categoria) return false;
-      if (filtros.material && p[COL.material] !== filtros.material) return false;
-      if (filtros.color && p[COL.color1] !== filtros.color && p[COL.color2] !== filtros.color) return false;
-      if (filtros.tamano && p[COL.tamano] !== filtros.tamano) return false;
-      if (filtros.busqueda) {
-        const q = filtros.busqueda.toLowerCase();
-        if (![p[COL.nombre], p[COL.categoria], p[COL.material], p[COL.color1]].join(' ').toLowerCase().includes(q)) return false;
+      const cats = Object.values(catMap);
+      const grid = document.getElementById('cat-grid');
+
+      if (!cats.length) {
+        grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:#9c7a84;padding:3rem">Cargando categorías…</p>`;
+        return;
       }
-      return true;
-    });
-  }
 
-  // ── RENDER GRID ──
-  function renderGrid() {
-    const lista = filtrar();
-    document.getElementById('results-info').textContent = `${lista.length} producto${lista.length !== 1 ? 's' : ''} encontrado${lista.length !== 1 ? 's' : ''}`;
-    if (!lista.length) {
-      document.getElementById('grid').innerHTML = `<div class="empty"><h3>Sin resultados</h3><p>Intenta con otros filtros.</p></div>`;
-      return;
-    }
-    document.getElementById('grid').innerHTML = lista.map((p, i) => {
-      const fotos = [p[COL.foto1], p[COL.foto2], p[COL.foto3]].filter(Boolean);
-      const precio = parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
-      const imgHTML = fotos.length
-        ? `<img src="${fotos[0]}" alt="${p[COL.nombre]}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=no-img>💎<span>Sin foto</span></div>'">`
-        : `<div class="no-img">💎<span>Sin foto</span></div>`;
-      const inCart = carrito.some(c => c.id === p[COL.id]);
-      const descPct = parseFloat(p[COL.descuento]);
-      const tieneDesc = !isNaN(descPct) && descPct > 0;
-      const precioFinal = tieneDesc ? precio * (1 - descPct / 100) : precio;
-      const precioHTML = tieneDesc
-        ? `<div class="precio-wrap">
-            <span class="precio-original">$${precio.toFixed(2)}</span>
-            <span class="precio-desc">$${precioFinal.toFixed(2)}</span>
-            <span class="badge-desc">-${Math.round(descPct)}% OFF</span>
-           </div>`
-        : `<div class="card-price">$${precio.toFixed(2)}</div>`;
-      return `
-        <div class="card" style="animation-delay:${i*0.04}s" data-idx="${productos.indexOf(p)}">
-          <div class="card-img-wrap">
-            ${imgHTML}
-            ${(p[COL.nuevo] && p[COL.nuevo].trim() && p[COL.nuevo].trim() !== '0') ? '<div class="badge-nuevo">✨ Nuevo</div>' : ''}
-          </div>
-          <div class="card-body">
-            <div class="card-cat">${p[COL.categoria]}</div>
-            <div class="card-name">${p[COL.nombre]}</div>
-            <div class="card-footer">
-              ${precioHTML}
-              <button class="btn-carrito${inCart?' added':''}" data-idx="${productos.indexOf(p)}">${inCart ? '✓ Agregado' : '+ Carrito'}</button>
+      // Populate hero category pills
+      const heroCats = document.getElementById('hero-cats');
+      heroCats.innerHTML = cats.map(cat =>
+        `<a class="hero-cat-pill" href="accis_catalogo.html?cat=${encodeURIComponent(cat.name)}">${cat.name}</a>`
+      ).join('');
+
+      grid.innerHTML = cats.map((cat, i) => {
+        const emoji = CAT_EMOJIS[cat.name] || '✦';
+        const bg = CAT_COLORS[i % CAT_COLORS.length];
+        const bgStyle = cat.foto
+          ? `background-image: url('${cat.foto}'); background-size: cover; background-position: center;`
+          : `background: ${bg};`;
+
+        return `
+          <a class="cat-card" href="accis_catalogo.html?cat=${encodeURIComponent(cat.name)}">
+            <div class="cat-card-bg" style="${bgStyle}">
+              ${!cat.foto ? `<span>${emoji}</span>` : ''}
             </div>
-          </div>
-        </div>`;
-    }).join('');
+            <div class="cat-card-overlay"></div>
+            <div class="cat-card-body">
+              <div class="cat-card-name">${cat.name}</div>
+              <div class="cat-card-link">Ver colección →</div>
+            </div>
+          </a>`;
+      }).join('');
 
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', e => {
-        if (e.target.classList.contains('btn-carrito') || e.target.closest('.btn-carrito')) return;
-        abrirModal(parseInt(card.dataset.idx));
-      });
-    });
-    document.querySelectorAll('.btn-carrito').forEach(btn => {
-      btn.addEventListener('click', e => { e.stopPropagation(); agregarCarrito(parseInt(btn.dataset.idx)); });
-    });
-  }
-
-  // ── CARRITO ──
-  function agregarCarrito(idx) {
-    const p = productos[idx];
-    if (!carrito.some(c => c.id === p[COL.id])) {
-      const pBase = parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
-      const pDesc = parseFloat(p[COL.descuento]);
-      const pFinal = (!isNaN(pDesc) && pDesc > 0) ? pBase * (1 - pDesc/100) : pBase;
-      carrito.push({ id: p[COL.id], nombre: p[COL.nombre], precio: pFinal, foto: p[COL.foto1] });
-    }
-    actualizarCarrito();
-    renderGrid();
-  }
-
-  function quitarCarrito(id) {
-    carrito = carrito.filter(c => c.id !== id);
-    actualizarCarrito();
-    renderGrid();
-  }
-
-  function actualizarCarrito() {
-    const count = carrito.length;
-    document.getElementById('cart-count').textContent = count;
-    const total = carrito.reduce((s, c) => s + (isNaN(c.precio) ? 0 : c.precio), 0);
-    document.getElementById('cart-total-price').textContent = '$' + total.toFixed(2);
-
-    const itemsEl = document.getElementById('cart-items');
-    if (!count) {
-      itemsEl.innerHTML = `<div class="cart-empty">Tu carrito está vacío</div>`;
-    } else {
-      itemsEl.innerHTML = carrito.map(c => `
-        <div class="cart-item">
-          ${c.foto ? `<img class="cart-item-img" src="${c.foto}" alt="${c.nombre}" onerror="this.style.display='none'"/>` : '<div class="cart-item-img"></div>'}
-          <div class="cart-item-info">
-            <div class="cart-item-name">${c.nombre}</div>
-            <div class="cart-item-price">${isNaN(c.precio) ? '' : '$'+c.precio.toFixed(2)}</div>
-          </div>
-          <button class="cart-item-remove" data-id="${c.id}">🗑</button>
-        </div>`).join('');
-      itemsEl.querySelectorAll('.cart-item-remove').forEach(btn => {
-        btn.addEventListener('click', () => quitarCarrito(btn.dataset.id));
-      });
-    }
-
-    // Build WA message
-    if (count) {
-      const lineas = carrito.map(c => `• ${c.nombre}${!isNaN(c.precio) ? ' ($'+c.precio.toFixed(2)+')' : ''}`).join('\n');
-      const msg = encodeURIComponent(`Hola! Quiero hacer un pedido:\n\n${lineas}\n\nTotal: $${total.toFixed(2)}`);
-      document.getElementById('btn-wa-cart').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+    } catch(e) {
+      console.error(e);
     }
   }
 
-  // ── MODAL ──
-  function abrirModal(idx) {
-    modalIdx = idx;
-    const p = productos[idx];
-    const fotos = [p[COL.foto1], p[COL.foto2], p[COL.foto3]].filter(Boolean);
-    const precio = parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
-
-    document.getElementById('modal-cat').textContent = p[COL.categoria];
-    document.getElementById('modal-name').textContent = p[COL.nombre];
-    const mDescPct = parseFloat(p[COL.descuento]);
-    const mTieneDesc = !isNaN(mDescPct) && mDescPct > 0;
-    const mPrecioFinal = mTieneDesc ? precio * (1 - mDescPct/100) : precio;
-    const priceEl = document.getElementById('modal-price');
-    if (mTieneDesc) {
-      priceEl.innerHTML = `<div class="modal-precio-original">$${precio.toFixed(2)}</div><div>$${mPrecioFinal.toFixed(2)}</div><div class="modal-badge-desc">-${Math.round(mDescPct)}% OFF</div>`;
-    } else {
-      priceEl.textContent = !isNaN(precio) ? '$' + precio.toFixed(2) : p[COL.precio];
-    }
-
-    const mainImg = document.getElementById('modal-main-img');
-    if (fotos.length) { mainImg.src = fotos[0]; mainImg.style.display = 'block'; }
-    else { mainImg.style.display = 'none'; }
-
-    let fotoIdx = 0;
-    function goToFoto(i) {
-      fotoIdx = i;
-      mainImg.src = fotos[fotoIdx];
-      document.getElementById('modal-prev').classList.toggle('hidden', fotoIdx === 0);
-      document.getElementById('modal-next').classList.toggle('hidden', fotoIdx === fotos.length - 1);
-      document.querySelectorAll('#modal-foto-dots span').forEach((d, di) => d.classList.toggle('active', di === fotoIdx));
-    }
-    const prevBtn = document.getElementById('modal-prev');
-    const nextBtn = document.getElementById('modal-next');
-    prevBtn.onclick = (e) => { e.stopPropagation(); goToFoto(fotoIdx - 1); };
-    nextBtn.onclick = (e) => { e.stopPropagation(); goToFoto(fotoIdx + 1); };
-    const dotsEl = document.getElementById('modal-foto-dots');
-    if (fotos.length > 1) {
-      dotsEl.innerHTML = fotos.map((_, i) => `<span class="${i===0?'active':''}"></span>`).join('');
-      dotsEl.style.display = 'flex';
-      nextBtn.classList.remove('hidden');
-      prevBtn.classList.add('hidden');
-    } else {
-      dotsEl.innerHTML = '';
-      dotsEl.style.display = 'none';
-      prevBtn.classList.add('hidden');
-      nextBtn.classList.add('hidden');
-    }
-
-    const details = [
-      ['Material', p[COL.material]], ['Color principal', p[COL.color1]],
-      ['Color secundario', p[COL.color2]], ['Tamaño', p[COL.tamano]],
-      ['Disponibilidad', '✅ Disponible'],
-      ['Notas', p[COL.notas]],
-    ].filter(d => d[1]);
-    document.getElementById('modal-details').innerHTML = details.map(d => `<div class="detail-item"><strong>${d[0]}</strong>${d[1]}</div>`).join('');
-
-    const addBtn = document.getElementById('btn-add-modal');
-    const inCart = carrito.some(c => c.id === p[COL.id]);
-    addBtn.textContent = inCart ? '✓ Ya está en el carrito' : '+ Agregar al carrito';
-    addBtn.onclick = () => { agregarCarrito(idx); addBtn.textContent = '✓ Ya está en el carrito'; };
-
-    document.getElementById('modal-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function cerrarModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
-
-  // ── CART PANEL ──
-  function abrirCarrito() {
-    document.getElementById('cart-panel').classList.add('open');
-    document.getElementById('cart-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function cerrarCarrito() {
-    document.getElementById('cart-panel').classList.remove('open');
-    document.getElementById('cart-overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  document.getElementById('cart-btn').addEventListener('click', abrirCarrito);
-  document.getElementById('cart-close').addEventListener('click', cerrarCarrito);
-  document.getElementById('cart-overlay').addEventListener('click', cerrarCarrito);
-  document.getElementById('btn-vaciar').addEventListener('click', () => { carrito = []; actualizarCarrito(); renderGrid(); });
-
-  document.getElementById('modal-close').addEventListener('click', cerrarModal);
-  document.getElementById('modal-close-x').addEventListener('click', cerrarModal);
-  document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target === document.getElementById('modal-overlay')) cerrarModal(); });
-
-  // ── FILTERS TOGGLE ──
-  document.getElementById('filters-toggle').addEventListener('click', function() {
-    this.classList.toggle('open');
-    document.getElementById('filters-panel').classList.toggle('open');
-  });
-
-  document.getElementById('f-material').addEventListener('change', e => { filtros.material = e.target.value; renderGrid(); });
-  document.getElementById('f-color').addEventListener('change', e => { filtros.color = e.target.value; renderGrid(); });
-  document.getElementById('f-tamano').addEventListener('change', e => { filtros.tamano = e.target.value; renderGrid(); });
-  document.getElementById('search').addEventListener('input', e => { filtros.busqueda = e.target.value; renderGrid(); });
-  document.getElementById('btn-clear').addEventListener('click', () => {
-    filtros = { categoria: filtros.categoria, material:'', color:'', tamano:'', busqueda:'' };
-    document.querySelectorAll('.filter-select').forEach(s => s.value = '');
-    document.getElementById('search').value = '';
-    renderGrid();
-  });
-
-  // ── WA HEADER BUTTON ──
-  const waHeaderMsg = encodeURIComponent('Hola! Quiero ver el catálogo de Accis Venezuela 💎');
-  document.querySelector('.btn-compra-header').href = `https://wa.me/${WA_NUMBER}?text=${waHeaderMsg}`;
-
-  cargarProductos();
+  loadCategories();
 </script>
 </body>
 </html>
