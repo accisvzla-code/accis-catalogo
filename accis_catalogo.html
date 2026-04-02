@@ -292,7 +292,7 @@
 
 <script>
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
-  const WA_NUMBER = '584241808527'; //
+  const WA_NUMBER = '584241808527'; // 
 
   const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12, descuento:13, nuevo:14, oculto:15 };
 
@@ -405,11 +405,11 @@
       const precioFinal = tieneDesc ? precio * (1 - descPct / 100) : precio;
       const precioHTML = tieneDesc
         ? `<div class="precio-wrap">
-            <span class="precio-original">$${precio.toFixed(2)}</span>
-            <span class="precio-desc">$${precioFinal.toFixed(2)}</span>
+            <span class="precio-original">€${precio.toFixed(2)}</span>
+            <span class="precio-desc">€${precioFinal.toFixed(2)}</span>
             <span class="badge-desc">-${Math.round(descPct)}% OFF</span>
            </div>`
-        : `<div class="card-price">$${precio.toFixed(2)}</div>`;
+        : `<div class="card-price">€${precio.toFixed(2)}</div>`;
       return `
         <div class="card" style="animation-delay:${i*0.04}s" data-idx="${productos.indexOf(p)}">
           <div class="card-img-wrap">
@@ -461,7 +461,7 @@
     const count = carrito.length;
     document.getElementById('cart-count').textContent = count;
     const total = carrito.reduce((s, c) => s + (isNaN(c.precio) ? 0 : c.precio), 0);
-    document.getElementById('cart-total-price').textContent = '$' + total.toFixed(2);
+    document.getElementById('cart-total-price').textContent = '€' + total.toFixed(2);
 
     const itemsEl = document.getElementById('cart-items');
     if (!count) {
@@ -472,7 +472,7 @@
           ${c.foto ? `<img class="cart-item-img" src="${c.foto}" alt="${c.nombre}" onerror="this.style.display='none'"/>` : '<div class="cart-item-img"></div>'}
           <div class="cart-item-info">
             <div class="cart-item-name">${c.nombre}</div>
-            <div class="cart-item-price">${isNaN(c.precio) ? '' : '$'+c.precio.toFixed(2)}</div>
+            <div class="cart-item-price">${isNaN(c.precio) ? '' : '€'+c.precio.toFixed(2)}</div>
           </div>
           <button class="cart-item-remove" data-id="${c.id}">🗑</button>
         </div>`).join('');
@@ -483,7 +483,7 @@
 
     // Build WA message
     if (count) {
-      const lineas = carrito.map(c => `• ${c.nombre}${!isNaN(c.precio) ? ' ($'+c.precio.toFixed(2)+')' : ''}`).join('\n');
+      const lineas = carrito.map(c => `• ${c.nombre}${!isNaN(c.precio) ? ' (€'+c.precio.toFixed(2)+')' : ''}`).join('\n');
       const msg = encodeURIComponent(`Hola! Quiero hacer un pedido:\n\n${lineas}\n\nTotal: $${total.toFixed(2)}`);
       document.getElementById('btn-wa-cart').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
     }
@@ -503,9 +503,9 @@
     const mPrecioFinal = mTieneDesc ? precio * (1 - mDescPct/100) : precio;
     const priceEl = document.getElementById('modal-price');
     if (mTieneDesc) {
-      priceEl.innerHTML = `<div class="modal-precio-original">$${precio.toFixed(2)}</div><div>$${mPrecioFinal.toFixed(2)}</div><div class="modal-badge-desc">-${Math.round(mDescPct)}% OFF</div>`;
+      priceEl.innerHTML = `<div class="modal-precio-original">€${precio.toFixed(2)}</div><div>€${mPrecioFinal.toFixed(2)}</div><div class="modal-badge-desc">-${Math.round(mDescPct)}% OFF</div>`;
     } else {
-      priceEl.textContent = !isNaN(precio) ? '$' + precio.toFixed(2) : p[COL.precio];
+      priceEl.textContent = !isNaN(precio) ? '€' + precio.toFixed(2) : p[COL.precio];
     }
 
     const mainImg = document.getElementById('modal-main-img');
