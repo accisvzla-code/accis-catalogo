@@ -529,7 +529,7 @@
         return `${nombre}${spaces}${precio}`;
       }).join('\n');
       const totalSpaces = ' '.repeat(Math.max(2, maxLen - 'Total.:'.length + 4));
-      const msg = encodeURIComponent(`Hola! Quiero hacer un pedido 💎\n\n${lineas}\n\n${'─'.repeat(28)}\nTotal.:${totalSpaces}€${total.toFixed(2)}\n\n🛵 ¿Cuánto sería el delivery?`);
+      const msg = encodeURIComponent(`Hola! Quiero hacer un pedido 💎\n\n${lineas}\n\n${'─'.repeat(28)}\nTotal.:${totalSpaces}€${total.toFixed(2)}\n\n);
       document.getElementById('btn-wa-cart').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
     }
     renderSugeridos();
