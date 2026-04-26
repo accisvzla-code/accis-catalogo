@@ -305,7 +305,7 @@
 
 <script>
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
-  const WA_NUMBER = '584241808527'; //
+  const WA_NUMBER = '584241808527'; // 
 
   const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12, descuento:13, nuevo:14, oculto:15 };
 
@@ -529,7 +529,7 @@
         return `${nombre}${spaces}${precio}`;
       }).join('\n');
       const totalSpaces = ' '.repeat(Math.max(2, maxLen - 'Total.:'.length + 4));
-      const msg = encodeURIComponent(`Hola! Quiero hacer un pedido 💎\n\n${lineas}\n\n${'─'.repeat(28)}\nTotal.:${totalSpaces}€${total.toFixed(2)}\n\n);
+      const msg = encodeURIComponent(`Hola! Quiero hacer un pedido 💎\n\n${lineas}\n\n${'─'.repeat(28)}\nTotal.:${totalSpaces}€${total.toFixed(2)}`);
       document.getElementById('btn-wa-cart').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
     }
     renderSugeridos();
