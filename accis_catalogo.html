@@ -138,6 +138,14 @@
     .cart-footer { padding:1.25rem 1.5rem; border-top:1px solid var(--border); }
     .cart-total { display:flex; justify-content:space-between; font-size:0.9rem; font-weight:500; margin-bottom:1rem; }
     .cart-total span:last-child { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--burgundy); }
+    .cart-sugeridos { padding: 0.75rem 1.5rem; border-top: 1px solid var(--border); }
+    .cart-sugeridos h4 { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:400; color:var(--text); margin-bottom:0.6rem; }
+    .sugeridos-list { display:flex; gap:0.6rem; overflow-x:auto; padding-bottom:0.25rem; scrollbar-width:none; }
+    .sugeridos-list::-webkit-scrollbar { display:none; }
+    .sugerido-item { flex-shrink:0; width:72px; cursor:pointer; text-align:center; }
+    .sugerido-img { width:72px; height:72px; border-radius:10px; object-fit:cover; background:var(--beige); display:block; margin-bottom:0.25rem; }
+    .sugerido-nombre { font-size:0.6rem; color:var(--text-muted); line-height:1.2; display:block; }
+    .sugerido-precio { font-size:0.65rem; color:var(--burgundy); font-weight:500; }
     .btn-wa-cart { width:100%; display:flex; align-items:center; justify-content:center; gap:0.5rem; padding:0.8rem; border-radius:24px; background:#25D366; color:var(--white); border:none; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; transition:background 0.2s; text-decoration:none; }
     .btn-wa-cart:hover { background:#1da851; }
     .btn-vaciar { width:100%; margin-top:0.5rem; padding:0.6rem; border-radius:24px; border:1px solid var(--border); background:none; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:0.8rem; cursor:pointer; }
@@ -254,8 +262,13 @@
   <div class="cart-items" id="cart-items">
     <div class="cart-empty">Tu carrito está vacío</div>
   </div>
+  <div class="cart-sugeridos" id="cart-sugeridos" style="display:none">
+    <h4>Creemos que esto te puede gustar ✨</h4>
+    <div class="sugeridos-list" id="sugeridos-list"></div>
+  </div>
   <div class="cart-footer">
-    <div class="cart-total"><span>Total</span><span id="cart-total-price">$0.00</span></div>
+    <div class="cart-total"><span>Total</span><span id="cart-total-price">€0.00</span></div>
+    <p style="font-size:0.72rem;color:var(--text-muted);text-align:center;margin-bottom:0.75rem;">Preguntar precio del delivery por WhatsApp 🛵</p>
     <a class="btn-wa-cart" id="btn-wa-cart" href="#" target="_blank">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Enviar pedido por WhatsApp
@@ -292,7 +305,7 @@
 
 <script>
   const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzi5Gtvu1ZRwoP-uYNQf8msYr-U7fq2HBJDoxOXFYwPkDpRgef3NWqRCpKUhP9dCM__g2gSYdyZYQ6/pub?gid=313944167&single=true&output=csv';
-  const WA_NUMBER = '584241808527'; // 
+  const WA_NUMBER = '584241808527'; //
 
   const COL = { id:0, nombre:1, categoria:2, precio:3, stock:4, material:5, color1:6, color2:7, tamano:8, foto1:9, foto2:10, foto3:11, notas:12, descuento:13, nuevo:14, oculto:15 };
 
@@ -353,6 +366,10 @@
         bar.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
         filtros.categoria = pill.dataset.cat;
+        // Clear other filters when switching category
+        filtros.material = ''; filtros.color = ''; filtros.tamano = ''; filtros.busqueda = '';
+        document.querySelectorAll('.filter-select').forEach(s => s.value = '');
+        document.getElementById('search').value = '';
         renderGrid();
       });
     });
@@ -441,14 +458,35 @@
   // ── CARRITO ──
   function agregarCarrito(idx) {
     const p = productos[idx];
-    if (!carrito.some(c => c.id === p[COL.id])) {
-      const pBase = parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
-      const pDesc = parseFloat(p[COL.descuento]);
-      const pFinal = (!isNaN(pDesc) && pDesc > 0) ? pBase * (1 - pDesc/100) : pBase;
-      carrito.push({ id: p[COL.id], nombre: p[COL.nombre], precio: pFinal, foto: p[COL.foto1] });
+    const stock = parseInt(p[COL.stock]) || 0;
+    const enCarrito = carrito.filter(c => c.id === p[COL.id]).length;
+    if (enCarrito >= stock) {
+      const msg = stock === 1
+        ? 'Solo nos queda una disponible ✨🫶🏻'
+        : `Solo nos quedan ${stock} disponibles ✨🫶🏻`;
+      mostrarToast(msg);
+      return;
     }
+    const pBase = parseFloat(String(p[COL.precio]).replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
+    const pDesc = parseFloat(p[COL.descuento]);
+    const pFinal = (!isNaN(pDesc) && pDesc > 0) ? pBase * (1 - pDesc/100) : pBase;
+    carrito.push({ id: p[COL.id], nombre: p[COL.nombre], precio: pFinal, foto: p[COL.foto1], stock: stock });
     actualizarCarrito();
     renderGrid();
+  }
+
+  function mostrarToast(msg) {
+    let t = document.getElementById('toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'toast';
+      t.style.cssText = 'position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:var(--burgundy);color:#fff;padding:0.65rem 1.25rem;border-radius:24px;font-size:0.82rem;z-index:500;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:opacity 0.3s;white-space:nowrap;';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.style.opacity = '0', 2800);
   }
 
   function quitarCarrito(id) {
@@ -483,10 +521,41 @@
 
     // Build WA message
     if (count) {
-      const lineas = carrito.map(c => `• ${c.nombre}${!isNaN(c.precio) ? ' (€'+c.precio.toFixed(2)+')' : ''}`).join('\n');
-      const msg = encodeURIComponent(`Hola! Quiero hacer un pedido:\n\n${lineas}\n\nTotal: $${total.toFixed(2)}`);
+      const maxLen = Math.max(...carrito.map(c => c.nombre.length));
+      const lineas = carrito.map(c => {
+        const nombre = c.nombre;
+        const precio = !isNaN(c.precio) ? '€' + c.precio.toFixed(2) : '';
+        const spaces = ' '.repeat(Math.max(2, maxLen - nombre.length + 4));
+        return `${nombre}${spaces}${precio}`;
+      }).join('\n');
+      const totalSpaces = ' '.repeat(Math.max(2, maxLen - 'Total.:'.length + 4));
+      const msg = encodeURIComponent(`Hola! Quiero hacer un pedido 💎\n\n${lineas}\n\n${'─'.repeat(28)}\nTotal.:${totalSpaces}€${total.toFixed(2)}\n\n🛵 ¿Cuánto sería el delivery?`);
       document.getElementById('btn-wa-cart').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
     }
+    renderSugeridos();
+  }
+
+  function renderSugeridos() {
+    const sec = document.getElementById('cart-sugeridos');
+    const list = document.getElementById('sugeridos-list');
+    if (!productos.length) { sec.style.display = 'none'; return; }
+    const enCarritoIds = new Set(carrito.map(c => c.id));
+    const disponibles = productos.filter(p => parseInt(p[COL.stock]) > 0 && !enCarritoIds.has(p[COL.id]));
+    if (!disponibles.length) { sec.style.display = 'none'; return; }
+    // Pick up to 6 random
+    const shuffled = disponibles.sort(() => Math.random() - 0.5).slice(0, 6);
+    list.innerHTML = shuffled.map(p => {
+      const precio = parseFloat(String(p[COL.precio]).replace(',','.').replace(/[^0-9.]/g,'')) || 0;
+      const pDesc = parseFloat(p[COL.descuento]);
+      const pFinal = (!isNaN(pDesc) && pDesc > 0) ? precio * (1 - pDesc/100) : precio;
+      const idx = productos.indexOf(p);
+      return `<div class="sugerido-item" onclick="agregarCarrito(${idx});renderSugeridos()">
+        ${p[COL.foto1] ? `<img class="sugerido-img" src="${p[COL.foto1]}" alt="${p[COL.nombre]}" onerror="this.style.background='var(--beige)'"/>` : `<div class="sugerido-img"></div>`}
+        <span class="sugerido-nombre">${p[COL.nombre]}</span>
+        <span class="sugerido-precio">€${pFinal.toFixed(2)}</span>
+      </div>`;
+    }).join('');
+    sec.style.display = 'block';
   }
 
   // ── MODAL ──
