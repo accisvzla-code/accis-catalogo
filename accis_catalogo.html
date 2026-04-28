@@ -540,7 +540,7 @@
     const list = document.getElementById('sugeridos-list');
     if (!productos.length) { sec.style.display = 'none'; return; }
     const enCarritoIds = new Set(carrito.map(c => c.id));
-    const disponibles = productos.filter(p => parseInt(p[COL.stock]) > 0 && !enCarritoIds.has(p[COL.id]));
+    const disponibles = productos.filter(p => parseInt(p[COL.stock]) > 0 && !enCarritoIds.has(p[COL.id]) && (!p[COL.oculto] || p[COL.oculto].trim() === '' || p[COL.oculto].trim() === '0'));
     if (!disponibles.length) { sec.style.display = 'none'; return; }
     // Pick up to 6 random
     const shuffled = disponibles.sort(() => Math.random() - 0.5).slice(0, 6);
