@@ -229,6 +229,12 @@
   </button>
   <div class="filters-panel" id="filters-panel">
     <div class="filters-inner">
+      <select class="filter-select" id="f-orden"><option value="">Ordenar por</option><option value="asc">Precio: menor a mayor</option><option value="desc">Precio: mayor a menor</option></select>
+      <select class="filter-select" id="f-orden">
+        <option value="">Ordenar por</option>
+        <option value="asc">Precio: menor a mayor</option>
+        <option value="desc">Precio: mayor a menor</option>
+      </select>
       <select class="filter-select" id="f-material"><option value="">Material</option></select>
       <select class="filter-select" id="f-color"><option value="">Color</option></select>
       <select class="filter-select" id="f-tamano"><option value="">Tamaño</option></select>
@@ -313,7 +319,7 @@
 
   let productos = [];
   let carrito = [];
-  let filtros = { categoria:'', material:'', color:'', tamano:'', busqueda:'' };
+  let filtros = { categoria:'', material:'', color:'', tamano:'', busqueda:'', orden:'' };
   let modalIdx = null;
 
   // ── PARSE CSV ──
@@ -369,7 +375,7 @@
         pill.classList.add('active');
         filtros.categoria = pill.dataset.cat;
         // Clear other filters when switching category
-        filtros.material = ''; filtros.color = ''; filtros.tamano = ''; filtros.busqueda = '';
+        filtros.material = ''; filtros.color = ''; filtros.tamano = ''; filtros.busqueda = ''; filtros.orden = '';
         document.querySelectorAll('.filter-select').forEach(s => s.value = '');
         document.getElementById('search').value = '';
         renderGrid();
@@ -401,6 +407,11 @@
         if (![p[COL.nombre], p[COL.categoria], p[COL.material], p[COL.color1]].join(' ').toLowerCase().includes(q)) return false;
       }
       return true;
+    }).sort((a, b) => {
+      if (!filtros.orden) return 0;
+      const pa = parseFloat(String(a[COL.precio]).replace(',','.').replace(/[^0-9.]/g,'')) || 0;
+      const pb = parseFloat(String(b[COL.precio]).replace(',','.').replace(/[^0-9.]/g,'')) || 0;
+      return filtros.orden === 'asc' ? pa - pb : pb - pa;
     });
   }
 
@@ -657,12 +668,14 @@
     document.getElementById('filters-panel').classList.toggle('open');
   });
 
+  document.getElementById('f-orden').addEventListener('change', e => { filtros.orden = e.target.value; renderGrid(); });
+  document.getElementById('f-orden').addEventListener('change', e => { filtros.orden = e.target.value; renderGrid(); });
   document.getElementById('f-material').addEventListener('change', e => { filtros.material = e.target.value; renderGrid(); });
   document.getElementById('f-color').addEventListener('change', e => { filtros.color = e.target.value; renderGrid(); });
   document.getElementById('f-tamano').addEventListener('change', e => { filtros.tamano = e.target.value; renderGrid(); });
   document.getElementById('search').addEventListener('input', e => { filtros.busqueda = e.target.value; renderGrid(); });
   document.getElementById('btn-clear').addEventListener('click', () => {
-    filtros = { categoria: filtros.categoria, material:'', color:'', tamano:'', busqueda:'' };
+    filtros = { categoria: filtros.categoria, material:'', color:'', tamano:'', busqueda:'', orden:'' };
     document.querySelectorAll('.filter-select').forEach(s => s.value = '');
     document.getElementById('search').value = '';
     renderGrid();
