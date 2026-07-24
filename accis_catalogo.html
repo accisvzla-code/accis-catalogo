@@ -230,11 +230,6 @@
   <div class="filters-panel" id="filters-panel">
     <div class="filters-inner">
       <select class="filter-select" id="f-orden"><option value="">Ordenar por</option><option value="asc">Precio: menor a mayor</option><option value="desc">Precio: mayor a menor</option></select>
-      <select class="filter-select" id="f-orden">
-        <option value="">Ordenar por</option>
-        <option value="asc">Precio: menor a mayor</option>
-        <option value="desc">Precio: mayor a menor</option>
-      </select>
       <select class="filter-select" id="f-material"><option value="">Material</option></select>
       <select class="filter-select" id="f-color"><option value="">Color</option></select>
       <select class="filter-select" id="f-tamano"><option value="">Tamaño</option></select>
@@ -668,7 +663,6 @@
     document.getElementById('filters-panel').classList.toggle('open');
   });
 
-  document.getElementById('f-orden').addEventListener('change', e => { filtros.orden = e.target.value; renderGrid(); });
   document.getElementById('f-orden').addEventListener('change', e => { filtros.orden = e.target.value; renderGrid(); });
   document.getElementById('f-material').addEventListener('change', e => { filtros.material = e.target.value; renderGrid(); });
   document.getElementById('f-color').addEventListener('change', e => { filtros.color = e.target.value; renderGrid(); });
