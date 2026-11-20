@@ -389,7 +389,7 @@
       `<button class="cat-pill nuevo-pill" data-cat="__nuevo__">✨ Lo nuevo</button>` +
       `<button class="cat-pill navidad-pill" data-cat="__navidad__">🎄 Navidad</button>` +
       cats.map(c => `<button class="cat-pill" data-cat="${c}">${c}</button>`).join('') +
-      `<button class="cat-pill liquidacion" data-cat="__liquidacion__">🏷 Liquidación</button>`;
+      `<button class="cat-pill liquidacion" data-cat="__liquidacion__">🏷 Pre Black Friday</button>`;
     bar.querySelectorAll('.cat-pill').forEach(pill => {
       pill.addEventListener('click', () => {
         bar.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
